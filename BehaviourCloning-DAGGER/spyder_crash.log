@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "C:\Users\vaisakhs\AppData\Local\Continuum\Anaconda3\envs\p352\lib\site-packages\spyder\app\mainwindow.py", line 2989, in main
+    mainwindow = run_spyder(app, options, args)
+  File "C:\Users\vaisakhs\AppData\Local\Continuum\Anaconda3\envs\p352\lib\site-packages\spyder\app\mainwindow.py", line 2893, in run_spyder
+    main.setup()
+  File "C:\Users\vaisakhs\AppData\Local\Continuum\Anaconda3\envs\p352\lib\site-packages\spyder\app\mainwindow.py", line 872, in setup
+    from spyder.plugins.ipythonconsole import IPythonConsole
+  File "C:\Users\vaisakhs\AppData\Local\Continuum\Anaconda3\envs\p352\lib\site-packages\spyder\plugins\ipythonconsole.py", line 60, in <module>
+    from spyder.widgets.ipythonconsole import ClientWidget
+  File "C:\Users\vaisakhs\AppData\Local\Continuum\Anaconda3\envs\p352\lib\site-packages\spyder\widgets\ipythonconsole\__init__.py", line 14, in <module>
+    from .namespacebrowser import NamepaceBrowserWidget
+  File "C:\Users\vaisakhs\AppData\Local\Continuum\Anaconda3\envs\p352\lib\site-packages\spyder\widgets\ipythonconsole\namespacebrowser.py", line 14, in <module>
+    from ipykernel.pickleutil import CannedObject
+ImportError: No module named 'ipykernel'
