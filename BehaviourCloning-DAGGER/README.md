@@ -21,8 +21,8 @@ The name of the pickle file corresponds to the name of the gym environment.
 
 The expert that we are trying to imitate here is the Hopper-v2.
 
-![img](/hopper.jpg)
+![img](hopper.PNG)
 
 Plot showing the training loss as a function of the number of epochs is shown below.
 
-![img](/warmup.png)
+![img](warmup.png)
