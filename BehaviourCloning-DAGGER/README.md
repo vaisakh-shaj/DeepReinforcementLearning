@@ -15,14 +15,18 @@ In `experts/`, the provided expert policies are:
 * Reacher-v1.pkl
 * Walker2d-v1.pkl
 
+**Example Usage**
+```%run run_expert.py experts/Hopper-v1.pkl Hopper-v2 --render --num_rollouts 10
+  ```
+
 The name of the pickle file corresponds to the name of the gym environment.
 
 ### 1. Does Behaviour Cloning a using a four layered neural net Agent converge while imitating the expert's policy?? ###
 
 The expert that we are trying to imitate here is the Hopper-v2.
 
-![img](hopper.PNG)
+![img](/hopper.png)
 
 Plot showing the training loss as a function of the number of epochs is shown below.
 
-![img](warmup.png)
+![img](/warmup.png)
