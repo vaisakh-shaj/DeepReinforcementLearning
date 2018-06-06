@@ -1,8 +1,3 @@
----
-bibliography: ''
-csl: ''
----
-
 Deep Reinforcement Learning Based Control in Continuous Action and State Spaces using Policy Gradients and Actor-Critic Networks
 --------------------------------------------------------------------------------------------------------------------------------
 
@@ -14,7 +9,9 @@ Deep Reinforcement Learning Based Control in Continuous Action and State Spaces 
 
  
 
-** Cart Pole with Discrete Action**
+**Cart Pole with Discrete Action**
+
+ 
 
 The cart-pole model(2) has four state variables
 
@@ -67,9 +64,15 @@ Figure 4
 
 **Inverted Pendulum with Continuous Actions**
 
+ 
+
 ![](Images/pendulum_continuous.PNG)
 
+ 
+
 Figure 5
+
+ 
 
 -   Observation 1: The learning curves with two different network architectures
     is shown in Fig 6. Its clear from the graph that the 5 layered feed forward
@@ -117,7 +120,7 @@ python train_pg.py HalfCheetah-v2 -ep 150 --discount 0.9 -b 40000 -rtg -l 3 -s 3
 *Observation 1:* After a lot of hyper parameter tuning, the settings that gave
 an average return above 150 before 100 iterations is given in the code block
 below. It used an unusually high batch size and a 5 layered deep neural network
-without a critic. * *
+without a critic.
 
  
 
@@ -126,8 +129,6 @@ without a critic. * *
  
 
  
-
-
 
  
 
@@ -135,13 +136,13 @@ without a critic. * *
 
  
 
-1) Learning to Control a 6-Degree-of-Freedom Walking Robot Paweł Wawrzynski,
+1.  Learning to Control a 6-Degree-of-Freedom Walking Robot Paweł Wawrzynski,
 
 http://prac.elka.pw.edu.pl/\~pwawrzyn/pub-s/0601_SLEAC.pdf
 
-2)  A. G. Barto, R. S. Sutton, and C. W. Anderson, “Neuronlike adaptive elements
-that can solve difficult learning control problems,”
-http://www.derongliu.org/adp/adp-cdrom/Barto1983.pdf
+1.  A. G. Barto, R. S. Sutton, and C. W. Anderson, “Neuronlike adaptive elements
+    that can solve difficult learning control problems,”
+    http://www.derongliu.org/adp/adp-cdrom/Barto1983.pdf
 
  
 
