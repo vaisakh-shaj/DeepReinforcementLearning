@@ -23,11 +23,7 @@ python train_pg.py InvertedPendulum-v2 --render -n 100 -b 5000 -e 5 -rtg --exp_n
 
 
 
-## Experiments
-
- 
-###Cart Pole with Discrete Action
- 
+## Experiment 1: Cart Pole with Discrete Action 
 
 The [cart-pole model](http://www.derongliu.org/adp/adp-cdrom/Barto1983.pdf) has four state variables
 
@@ -60,8 +56,7 @@ Figure 3
 Figure 4
 
  
-
-###Inverted Pendulum with Continuous Actions
+## Experiment 2: Inverted Pendulum with Continuous Actions
 
  Command Line Code
 ```
@@ -87,7 +82,7 @@ Figure 6
 
  
 
-###HALF CHEETAH
+##Experiment 3: HALF CHEETAH
 
 Code Block
 
@@ -120,7 +115,7 @@ without a critic.
 
  
 
-### REFERENCES
+## REFERENCES
 
  
 
