@@ -16,8 +16,9 @@ In `experts/`, the provided expert policies are:
 * Walker2d-v1.pkl
 
 **Example Usage**
-```%run run_expert.py experts/Hopper-v1.pkl Hopper-v2 --render --num_rollouts 10
-  ```
+```
+%run run_expert.py experts/Hopper-v1.pkl Hopper-v2 --render --num_rollouts 10
+```
 
 The name of the pickle file corresponds to the name of the gym environment.
 
@@ -25,8 +26,8 @@ The name of the pickle file corresponds to the name of the gym environment.
 
 The expert that we are trying to imitate here is the Hopper-v2.
 
-![img](/hopper.png)
+![img1](hopper.PNG)
 
 Plot showing the training loss as a function of the number of epochs is shown below.
 
-![img](/warmup.png)
+![img2](warmup.png)
