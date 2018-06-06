@@ -136,13 +136,12 @@ without a critic.
 
  
 
-1.  Learning to Control a 6-Degree-of-Freedom Walking Robot Paweł Wawrzynski,
-
+1. Learning to Control a 6-Degree-of-Freedom Walking Robot Paweł Wawrzynski,
 http://prac.elka.pw.edu.pl/\~pwawrzyn/pub-s/0601_SLEAC.pdf
 
-1.  A. G. Barto, R. S. Sutton, and C. W. Anderson, “Neuronlike adaptive elements
-    that can solve difficult learning control problems,”
-    http://www.derongliu.org/adp/adp-cdrom/Barto1983.pdf
+2. A. G. Barto, R. S. Sutton, and C. W. Anderson, “Neuronlike adaptive elements
+that can solve difficult learning control problems,”
+http://www.derongliu.org/adp/adp-cdrom/Barto1983.pdf
 
  
 
