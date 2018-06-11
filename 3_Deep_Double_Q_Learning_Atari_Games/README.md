@@ -40,13 +40,15 @@ cropping an 84 × 84 region of the image that roughly captures the playing area.
 
 **Network Architecture**
 
-![](Images/architecture.png)
+![Figure 1](Images/architecture.PNG)
+Figure 1
+
 
 **Observation 1 - Convergence**
 
 The implementation of the DQN with Piecewise linear schedule learning rate and exploration(epsilon greedy) converged as expected as shown in figure 2, indicating that our implementation is correct. The experiments were run on the lightweight version(states emulator RAM instead of images) initially.The experiment was run for 1 million time steps. 
 
-![](Images/ram.png)
+![Figure 2](Images/ram.png)
 Figure 2
 
 **Observation 2 - Hyperparameters**
@@ -54,7 +56,7 @@ Figure 2
 As shown in figure 3, a learning rate multiplier of 0.75 gave much better learning performance(in terms of convergence rate) than higher learning rates of 0.5. For the default rate of 1, the system actually diverged in this implementation.  
  Also using a Huber Loss rather than the mean-squared loss also made a huge difference, though learning curve is not plotted for the same.
 
-![](Images/learning_rate.png)
+![Figure 3](Images/learning_rate.png)
 Figure 3
 
 ## Experiment 2: Improving Performance using Double Q Learning
@@ -66,7 +68,7 @@ values, resulting in overoptimistic value estimates.
 To prevent
 this, double DQN can decouple the selection from the evaluation.In double DQN use the current network(not the target network) to select actions in the Q Learning Bellman Equation, and use the target network to select the action values.  
 
-![](Images/eqDDQN.png)
+![](Images/eqDDQN.PNG)
 
 Equation [1](https://docs.google.com/document/d/1Iw_TUijQ-C6F0M3mWWco8_rDiuEblKvtr8mCB3ITLas/edit#bookmark=id.o1wk0u1ffpzv)
 
@@ -76,7 +78,7 @@ As shown in figure below, for the same learning rate, the Double DQN seems to be
 ![](Images/DoubleQ.png)
 
 
-![](Images/ddqn-paper.png)
+![](https://github.com/vaisakh-shaj/DeepReinforcementLearning/blob/master/3_Deep_Double_Q_Learning_Atari_Games/Images/ddqn-paper.PNG)
 Figure 4: Graph from our experiments(above) and [paper](file:///C:/Users/DELL/Downloads/12389-55999-1-PB.pdf)(below).
 
 ## REFERENCES
@@ -95,6 +97,8 @@ https://storage.googleapis.com/deepmind-data/assets/papers/DeepMindNature14236Pa
 
 5. Van Hasselt, Guez, Silver. [Deep reinforcement learning with double Q-learning: a
 very effective trick to improve performance of deep Q-learning.](file:///C:/Users/DELL/Downloads/12389-55999-1-PB.pdf)
+
+
 
  
 
