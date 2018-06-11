@@ -3,9 +3,12 @@
 """
 Code to load an expert policy and generate roll-out data for behavioral cloning.
 Example usage:
-            python ss
+            %run run_expert.py experts/Hopper-v1.pkl Hopper-v2 --render --num_rollouts 10
 
+Dagger and Behaviour Clonning Implementation : @uthor : vaisakhs (vaisakhs.shaj@gmail.com)
 Author of this script and included expert policies: Jonathan Ho (hoj@openai.com)
+
+
 """
 
 import pickle
@@ -27,6 +30,7 @@ def main():
     parser.add_argument('--num_rollouts', type=int, default=20,
                         help='Number of expert roll outs')
     args = parser.parse_args()
+    
 
     print('loading and building expert policy')
     policy_fn = load_policy.load_policy(args.expert_policy_file)
@@ -38,7 +42,6 @@ def main():
         import gym
         env = gym.make(args.envname)
         max_steps = args.max_timesteps or env.spec.timestep_limit
-
         returns = []
         observations = []
         actions = []
@@ -50,9 +53,105 @@ def main():
             steps = 0
             while not done:
                 action = policy_fn(obs[None,:])
+                #print(action.shape)
                 observations.append(obs)
                 actions.append(action)
                 obs, r, done, _ = env.step(action)
+                print(r)
+                totalr += r
+                steps += 1
+                if args.render:
+                    env.render()
+                if steps % 100 == 0: print("%i/%i"%(steps, max_steps))
+                if steps >= max_steps:
+                    break
+            returns.append(totalr)
+
+        print('returns', returns)
+        print('mean return', np.mean(returns))
+        print('std of return', np.std(returns))
+
+        expert_data = {'observations': np.array(observations),
+                       'actions': np.array(actions)}
+        
+        return expert_data,args
+    
+def behaviourCloning(expert_data,args):
+    from keras import utils
+    from keras.models import Sequential
+    from keras.layers import Dense, Dropout, Activation
+    xTr=expert_data['observations']
+    yTr=expert_data['actions']
+
+    import numpy as np
+    #print(xTr.shape)
+    #print(yTr.shape)
+    yTr=np.reshape(yTr,(yTr.shape[0],yTr.shape[2]))
+    #construct Model
+    model = Sequential()
+    model.add(Dense(150, input_dim=xTr.shape[1], init="uniform",
+        activation="relu"))
+    model.add(Dense(50, init="uniform", activation="relu"))
+    model.add(Dense(yTr.shape[1]))
+    
+    #compile Model
+    model.compile(loss='msle',
+                  optimizer='adam',
+                  metrics=['accuracy'])
+    model.save_weights(R"D:\MCAFEE\GITHUB\DeepReinforcementLearning\BehaviourCloning-DAGGER\Policies\policyDNN.h5")
+    
+    history=model.fit(xTr, yTr,
+              epochs=40,
+              batch_size=256,validation_split=0.1)
+    print(history.history['loss'])
+    
+    #print(model.predict(xTr))
+    ######### Training Error Plot
+    det=list()
+    for i,e in enumerate(history.history['loss'],0):
+        det.append(e)
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    det=np.log(det)
+    det=[round(float(x),3) for x in det]
+    plt.plot(range(len(det)),det, linestyle='dashed', marker='o',
+         markerfacecolor='blue', markersize=12)
+    for x, y in zip( range(len(det)), det):
+        plt.text(x, y, str(y), color="blue", fontsize=12)
+    plt.title("Log Loss Vs Epoch Curve")
+    plt.xlabel("epoch")
+    plt.ylabel("Log Loss")
+    plt.grid()
+    plt.show()
+    dagger(model,args)
+ 
+def dagger(model,args):
+    print('using the learnt policy')
+    policy_fn = model
+    print('loaded and built')
+
+    with tf.Session():
+        tf_util.initialize()
+        import gym
+        env = gym.make(args.envname)
+        max_steps = args.max_timesteps or env.spec.timestep_limit
+        returns = []
+        observations = []
+        actions = []
+        for i in range(4):
+            print('iter', i)
+            obs = env.reset()
+            done = False
+            totalr = 0
+            steps = 0
+            while not done:
+                #print("hello")
+                action = policy_fn.predict(np.array(obs[None,:]))
+                observations.append(obs)
+                actions.append(action)
+                obs, r, done, _ = env.step(action)
+                #print(obs)
+                done=False
                 totalr += r
                 steps += 1
                 if args.render:
@@ -70,56 +169,12 @@ def main():
                        'actions': np.array(actions)}
         
         return expert_data
+    #### get simulated data/observations
     
-def behaviourCloning(expert_data):
-    from keras import utils
-    from keras.models import Sequential
-    from keras.layers import Dense, Dropout, Activation
-    xTr=expert_data['observations']
-    yTr=expert_data['actions']
-
-    import numpy as np
-    #print(xTr.shape)
-    #print(yTr.shape)
-    yTr=np.reshape(yTr,(yTr.shape[0],yTr.shape[2]))
-    #construct Model
-    model = Sequential()
-    model.add(Dense(200, input_dim=376, init="uniform",
-        activation="relu"))
-    model.add(Dropout(0.5))
-    model.add(Dense(200, init="uniform", activation="relu"))
-    model.add(Dropout(0.5))
-    model.add(Dense(17))
-    model.add(Activation("softmax"))
-    #compile Model
-    model.compile(loss='mean_squared_error',
-                  optimizer='rmsprop',
-                  metrics=['accuracy'])
-    
-    history=model.fit(xTr, yTr,
-              epochs=10,
-              batch_size=256)
-    
-    
-    ######### Training Error Plot
-    det=list()
-    for i,e in enumerate(history.history['loss'],0):
-        det.append(e)
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
-    plt.plot(range(len(det)),det, linestyle='dashed', marker='o',
-         markerfacecolor='blue', markersize=12)
-    for x, y in zip( range(len(det)), det):
-        plt.text(x, y, str(y), color="blue", fontsize=12)
-    plt.title("Loss Vs Epoch Curve")
-    plt.xlabel("epoch")
-    plt.ylabel("Loss")
-    plt.grid()
-    plt.show()
-
+    #### get actions for this data
     
     
 
 if __name__ == '__main__':
-    expert_data=main()
-    behaviourCloning(expert_data)
+    expert_data,args=main()
+    ed2=behaviourCloning(expert_data,args)
