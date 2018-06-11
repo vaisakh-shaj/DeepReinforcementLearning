@@ -47,6 +47,7 @@ cropping an 84 × 84 region of the image that roughly captures the playing area.
 The implementation of the DQN with Piecewise linear schedule learning rate and exploration(epsilon greedy) converged as expected as shown in figure 2, indicating that our implementation is correct. The experiments were run on the lightweight version(states emulator RAM instead of images) initially.The experiment was run for 1 million time steps. 
 
 ![](Images/ram.png)
+Figure 2
 
 **Observation 2 - Hyperparameters**
 
@@ -54,6 +55,7 @@ As shown in figure 3, a learning rate multiplier of 0.75 gave much better learni
  Also using a Huber Loss rather than the mean-squared loss also made a huge difference, though learning curve is not plotted for the same.
 
 ![](Images/learning_rate.png)
+Figure 3
 
 ## Experiment 2: Improving Performance using Double Q Learning
  
@@ -65,15 +67,16 @@ To prevent
 this, double DQN can decouple the selection from the evaluation.In double DQN use the current network(not the target network) to select actions in the Q Learning Bellman Equation, and use the target network to select the action values.  
 
 ![](Images/eqDDQN.png)
+[Equation 1](https://docs.google.com/document/d/1Iw_TUijQ-C6F0M3mWWco8_rDiuEblKvtr8mCB3ITLas/edit#bookmark=id.o1wk0u1ffpzv)
 
-As shown in figure 5, for the same learning rate, the Double DQN seems to be picking up with the DQN Learning in the final stages of learning and can possible outperform with more training steps(currently not performed) as shown in the [paper](file:///C:/Users/DELL/Downloads/12389-55999-1-PB.pdf). 
+As shown in figure below, for the same learning rate, the Double DQN seems to be picking up with the DQN Learning in the final stages of learning and can possible outperform with more training steps(currently not performed) as shown in the [paper](file:///C:/Users/DELL/Downloads/12389-55999-1-PB.pdf). 
 
 
 ![](Images/DoubleQ.png)
 
 
 ![](Images/ddqn-paper.png)
-Figure from our experiments(above) and [paper](file:///C:/Users/DELL/Downloads/12389-55999-1-PB.pdf)(below).
+Figure 4: Graph from our experiments(above) and [paper](file:///C:/Users/DELL/Downloads/12389-55999-1-PB.pdf)(below).
 
 ## REFERENCES
 
