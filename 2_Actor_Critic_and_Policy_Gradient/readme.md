@@ -19,7 +19,7 @@ Deep Reinforcement Learning Based Control in Continuous Action and State Spaces 
 python train_pg.py InvertedPendulum-v2 --render -n 100 -b 5000 -e 5 -rtg --exp_name lb_continuous_5_layered_DeepNeuralNet -l 3 -lr 1e-2
 ```
 
-**Detailed Instructions**
+**[Detailed Instructions](/hw2_final.pdf)**
 
 
 
@@ -33,7 +33,9 @@ The [cart-pole model](http://www.derongliu.org/adp/adp-cdrom/Barto1983.pdf) has 
     batch size helps in faster learning and better policies in terms of Average
     Returns.
 
-**Observation 2**: From Fig 3 it is clear that when we push up the probability of picking action at in state st in proportion to the ‘reward-to-go’ from that state-action pair—the sum of rewards achieved by starting in st, taking action at, and then acting according to the current policy forever after, rather than a trajectory centric policy gives much better policies.
+**Observation 2**: From Fig 3 it is clear that state/action centric policy(green) gives much better policies. than a trajectory centric policy(red).
+
+![](Images/equation2.PNG)
 
 Also Advantage normalization gives slightly better policies.
 
@@ -124,6 +126,8 @@ without a critic.
 2. A. G. Barto, R. S. Sutton, and C. W. Anderson, [“Neuronlike adaptive elements
 that can solve difficult learning control problems”](
 http://www.derongliu.org/adp/adp-cdrom/Barto1983.pdf)
+
+3. CS 294: Deep Reinforcement Learning, Fall 2017
 
  
 

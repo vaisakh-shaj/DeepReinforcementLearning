@@ -22,7 +22,7 @@ Reinforcement Learning Based Control using High Dimensional Sensory Inputs - Dee
 python train_pg.py InvertedPendulum-v2 --render -n 100 -b 5000 -e 5 -rtg --exp_name lb_continuous_5_layered_DeepNeuralNet -l 3 -lr 1e-2
 ```
 
-**Detailed Instructions**
+**[Detailed Instructions](/hw3.pdf)**
  
 ## Experiment 1: Find Control Policies for playing Atari-2600 Pong directly from Pixels 
 
@@ -183,7 +183,7 @@ very effective trick to improve performance of deep Q-learning.](file:///C:/User
 1.  Mnih, Volodymyr, et al. "Human-level control through deep reinforcement
     learning." *Nature* 518.7540 (2015): 529.
 
-2.  CS 294: Deep Reinforcement Learning - Fall 2017 UCB
+2. CS 294: Deep Reinforcement Learning, Fall 2017
 
  
 
