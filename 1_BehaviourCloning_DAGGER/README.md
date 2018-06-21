@@ -60,7 +60,7 @@ Number of Data Points DAGGER: 49500
 
 The performance comparison is shown in the plot below:
 
-![](Images/dagger-BC.png)
+![](Images/dagger-BC.PNG)
 
 Figure Below shows the learnt behaviour of the Ant, at he starting of DAGGER(left) and in the final stages of learning(right)
 
