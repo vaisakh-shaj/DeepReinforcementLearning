@@ -26,8 +26,10 @@ python train_pg.py InvertedPendulum-v2 --render -n 100 -b 5000 -e 5 -rtg --exp_n
 ## Experiment 1: Cart Pole with Discrete Action 
 
 The [cart-pole model](http://www.derongliu.org/adp/adp-cdrom/Barto1983.pdf) has four state variables
+> The 4 numbers in the box space for observation represents: [position of cart, velocity of cart, angle of pole, rotation rate of pole]
 
 ![](Images/math1.png)
+
 
 **Observation 1**: Comparing Fig 1 and Fig 2, it is clear that having a larger
     batch size helps in faster learning and better policies in terms of Average
@@ -36,6 +38,7 @@ The [cart-pole model](http://www.derongliu.org/adp/adp-cdrom/Barto1983.pdf) has 
 **Observation 2**: From Fig 3 it is clear that state/action centric policy(green) gives much better policies. than a trajectory centric policy(red).
 
 ![](Images/equation2.PNG)
+Equation [2](https://docs.google.com/document/d/1Iw_TUijQ-C6F0M3mWWco8_rDiuEblKvtr8mCB3ITLas/edit#bookmark=id.ykbyvnen9iwg)
 
 Also Advantage normalization gives slightly better policies.
 

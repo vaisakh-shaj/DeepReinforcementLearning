@@ -18,7 +18,7 @@ import tf_util
 import gym
 import load_policy
 import matplotlib.pyplot as plt
-
+from keras.layers.advanced_activations import LeakyReLU, PReLU
 
 def main():
     import argparse
@@ -57,7 +57,7 @@ def main():
                 observations.append(obs)
                 actions.append(action)
                 obs, r, done, _ = env.step(action)
-                print(r)
+                #print(r)
                 totalr += r
                 steps += 1
                 if args.render:
@@ -80,6 +80,7 @@ def behaviourCloning(expert_data,args):
     from keras import utils
     from keras.models import Sequential
     from keras.layers import Dense, Dropout, Activation
+    from keras.layers.advanced_activations import LeakyReLU, PReLU
     xTr=expert_data['observations']
     yTr=expert_data['actions']
 
@@ -89,21 +90,28 @@ def behaviourCloning(expert_data,args):
     yTr=np.reshape(yTr,(yTr.shape[0],yTr.shape[2]))
     #construct Model
     model = Sequential()
-    model.add(Dense(150, input_dim=xTr.shape[1], init="uniform",
-        activation="relu"))
-    model.add(Dense(50, init="uniform", activation="relu"))
+    model.add(Dense(120, input_dim=xTr.shape[1], init="uniform",
+        activation="linear"))
+    model.add(LeakyReLU(alpha=.01))
+    model.add(Dropout(0.5))
+    model.add(Dense(100, init="uniform", activation="linear"))
+    model.add(LeakyReLU(alpha=.01))
+    model.add(Dropout(0.5))
+    model.add(Dense(80, init="uniform", activation="linear"))
+    model.add(LeakyReLU(alpha=.01))
+    model.add(Dropout(0.5))
     model.add(Dense(yTr.shape[1]))
     
     #compile Model
-    model.compile(loss='msle',
+    model.compile(loss='mean_squared_error',
                   optimizer='adam',
                   metrics=['accuracy'])
-    model.save_weights(R"D:\MCAFEE\GITHUB\DeepReinforcementLearning\BehaviourCloning-DAGGER\Policies\policyDNN.h5")
+    model.save_weights(R"D:\MCAFEE\GITHUB\DeepReinforcementLearning\BehaviourCloning-DAGGER\Policies\policyDNNBC.h5")
     
     history=model.fit(xTr, yTr,
-              epochs=40,
+              epochs=12,
               batch_size=256,validation_split=0.1)
-    print(history.history['loss'])
+    #print(history.history['loss'])
     
     #print(model.predict(xTr))
     ######### Training Error Plot
@@ -123,55 +131,33 @@ def behaviourCloning(expert_data,args):
     plt.ylabel("Log Loss")
     plt.grid()
     plt.show()
-    dagger(model,args)
- 
-def dagger(model,args):
-    print('using the learnt policy')
-    policy_fn = model
-    print('loaded and built')
-
-    with tf.Session():
-        tf_util.initialize()
-        import gym
-        env = gym.make(args.envname)
-        max_steps = args.max_timesteps or env.spec.timestep_limit
-        returns = []
-        observations = []
-        actions = []
-        for i in range(4):
-            print('iter', i)
-            obs = env.reset()
-            done = False
-            totalr = 0
-            steps = 0
-            while not done:
-                #print("hello")
-                action = policy_fn.predict(np.array(obs[None,:]))
-                observations.append(obs)
-                actions.append(action)
-                obs, r, done, _ = env.step(action)
-                #print(obs)
-                done=False
-                totalr += r
-                steps += 1
-                if args.render:
-                    env.render()
-                if steps % 100 == 0: print("%i/%i"%(steps, max_steps))
-                if steps >= max_steps:
-                    break
-            returns.append(totalr)
-
-        print('returns', returns)
-        print('mean return', np.mean(returns))
-        print('std of return', np.std(returns))
-
-        expert_data = {'observations': np.array(observations),
-                       'actions': np.array(actions)}
-        
-        return expert_data
-    #### get simulated data/observations
+    ################################################################################
     
-    #### get actions for this data
+    env = gym.make(args.envname)
+    max_steps = args.max_timesteps or env.spec.timestep_limit
+    returns = []
+    observations = []
+    actions = []
+    obs = env.reset()
+    done = False
+    totalr = 0
+    steps = 0
+    while not done:
+        predicted_action = model.predict(np.array(obs[None,:]))
+        obs, r, done, _ = env.step(predicted_action)
+        totalr += r
+        steps += 1
+        if args.render:
+            env.render()
+        if steps >= max_steps:
+            break
+    print("BC ",totalr)
+    model.save_weights(r"C:\Users\DELL\Desktop\GITHUB\DeepReinforcementLearning\1_BehaviourCloning_DAGGER\Policies\policyDNN_ANTBC.h5")
+    returns.append(totalr)
+
+    print('returns', returns)
+ 
+
     
     
 

@@ -1,0 +1,2 @@
+Iteration	AverageCost	StdCost	MinimumCost	MaximumCost	AverageReturn	StdReturn	MinimumReturn	MaximumReturn
+0	nan	nan	nan	nan	-228.64903519089663	0.0	-228.64903519089663	-228.64903519089663

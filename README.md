@@ -11,6 +11,10 @@ Contains codes and reports of running Deep RL techniques on standard simulated e
 3. [Deep Q Learning and Double Deep Q Learning](https://github.com/vaisakh-shaj/DeepReinforcementLearning/tree/master/3_Deep_Double_Q_Learning_Atari_Games)
 
 
+## Which RL algorithm to use ?
+
+![](Images/whichRL.png)
+
 ## Coming Soon
 
 - Model Based RL

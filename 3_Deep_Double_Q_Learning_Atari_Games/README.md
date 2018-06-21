@@ -98,6 +98,8 @@ https://storage.googleapis.com/deepmind-data/assets/papers/DeepMindNature14236Pa
 5. Van Hasselt, Guez, Silver. [Deep reinforcement learning with double Q-learning: a
 very effective trick to improve performance of deep Q-learning.](file:///C:/Users/DELL/Downloads/12389-55999-1-PB.pdf)
 
+6. CS 294: Deep Reinforcement Learning, Fall 2017
+
 
 
  
