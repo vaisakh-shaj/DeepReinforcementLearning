@@ -21,7 +21,7 @@ python main.py -n 1 -ep 1000 -m 10 -sp 500 -r 150 -d 2 -b 1000 -m 10
 
 The Model Based RL Framework used in the experiments is shown in the figure below:
 
-![](Images/flowchart.png)
+![](Images/flowchart.PNG)
 
 ## Experiment 1: Fit a dynamics model to random data alone and use the learned dynamics model in a MPC controller to control the cheetah robot 
 
