@@ -27,7 +27,7 @@ The Model Based RL Framework used in the experiments is shown in the figure belo
 
 An average return of 134 was obtained. Detailed result is shown below:
  
-![](Images/1.png) 
+![](Images/1.PNG) 
 
 Settings Used:
 ```
