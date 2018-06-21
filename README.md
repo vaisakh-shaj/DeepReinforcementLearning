@@ -17,6 +17,5 @@ Contains codes and reports of running Deep RL techniques on standard simulated e
 
 ## Coming Soon
 
-- Model Based RL
 - Transfer and Life Long Learning - an RL Perspective
 - Gradient Free Deep RL
