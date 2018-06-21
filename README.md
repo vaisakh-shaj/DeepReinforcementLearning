@@ -23,4 +23,4 @@ Contains codes and reports of running Deep RL techniques on standard simulated e
 
 ## License
 
-- MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)
+- MIT license ([LICENSE-MIT](https://github.com/vaisakh-shaj/DeepReinforcementLearning/blob/master/LICENSE-MIT.md) or http://opensource.org/licenses/MIT)
