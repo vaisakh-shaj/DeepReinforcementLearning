@@ -20,3 +20,7 @@ Contains codes and reports of running Deep RL techniques on standard simulated e
 
 - Transfer and Life Long Learning - an RL Perspective
 - Gradient Free Deep RL
+
+## License
+
+- MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)
