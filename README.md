@@ -9,6 +9,7 @@ Contains codes and reports of running Deep RL techniques on standard simulated e
 1. [Imitation Learning - DAGGER](https://github.com/vaisakh-shaj/DeepReinforcementLearning/tree/master/1_BehaviourCloning_DAGGER)
 2. [Policy Gradient - Actor Critic Networks](https://github.com/vaisakh-shaj/DeepReinforcementLearning/tree/master/2_Actor_Critic_and_Policy_Gradient)
 3. [Deep Q Learning and Double Deep Q Learning](https://github.com/vaisakh-shaj/DeepReinforcementLearning/tree/master/3_Deep_Double_Q_Learning_Atari_Games)
+4. [Model Based RL with MPC Controller](https://github.com/vaisakh-shaj/DeepReinforcementLearning/tree/master/4_ModelBasedRL_OptimalControllers)
 
 
 ## Which RL algorithm to use ?
