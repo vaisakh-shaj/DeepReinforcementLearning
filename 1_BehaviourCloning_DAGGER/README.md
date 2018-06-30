@@ -1,6 +1,6 @@
 # Imitation Learning(Behaviour Cloning and DAGGER)
-
-**Dependencies**: 
+$$\alpha +\beta$$
+**Dependencies**:
 -TensorFlow   
 -MuJoCo version 1.31 /1.51  
 -OpenAI Gym  
