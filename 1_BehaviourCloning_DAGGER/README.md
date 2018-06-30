@@ -1,5 +1,5 @@
 # Imitation Learning(Behaviour Cloning and DAGGER)
-$$\alpha +\beta$$
+
 **Dependencies**:
 -TensorFlow   
 -MuJoCo version 1.31 /1.51  
@@ -21,8 +21,9 @@ In `experts/`, the provided expert policies are:
 * Walker2d-v1.pkl
 
 **Example Usage**
-```%run run_expert.py experts/Hopper-v1.pkl Hopper-v2 --render --num_rollouts 10
-  ```
+```Python
+%run run_expert.py experts/Hopper-v1.pkl Hopper-v2 --render --num_rollouts 10
+```
 
 The name of the pickle file corresponds to the name of the gym environment.
 
