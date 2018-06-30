@@ -37,7 +37,7 @@ The [cart-pole model](http://www.derongliu.org/adp/adp-cdrom/Barto1983.pdf) has 
 
 **Observation 2**: From Fig 3 it is clear that state/action centric policy(green) gives much better policies. than a trajectory centric policy(red).
 
-![](Images/equation2.PNG)
+![](Images/equation2.gif)
 Equation [2](https://docs.google.com/document/d/1Iw_TUijQ-C6F0M3mWWco8_rDiuEblKvtr8mCB3ITLas/edit#bookmark=id.ykbyvnen9iwg)
 
 Also Advantage normalization gives slightly better policies.
