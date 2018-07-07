@@ -19,7 +19,7 @@ Deep Reinforcement Learning Based Control in Continuous Action and State Spaces 
 python train_pg.py InvertedPendulum-v2 --render -n 100 -b 5000 -e 5 -rtg --exp_name lb_continuous_5_layered_DeepNeuralNet -l 3 -lr 1e-2
 ```
 
-**[Detailed Instructions](/hw2_final.pdf)**
+**[Detailed Instructions](http://rail.eecs.berkeley.edu/deeprlcourse-fa17/f17docs/hw2_final.pdf)**
 
 
 

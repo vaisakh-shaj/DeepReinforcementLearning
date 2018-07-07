@@ -27,6 +27,9 @@ In `experts/`, the provided expert policies are:
 
 The name of the pickle file corresponds to the name of the gym environment.
 
+
+**[Detailed Instructions](http://rail.eecs.berkeley.edu/deeprlcourse-fa17/f17docs/hw1fall2017.pdf)**
+
 ## Experiment 1. Convergence of Behaviour Cloning using a four layered neural net Agent trying to imitating the expert's policy ##
 
 The expert that we are trying to imitate here is the Hopper-v2.

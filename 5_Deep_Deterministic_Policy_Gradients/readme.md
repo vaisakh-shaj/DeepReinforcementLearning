@@ -20,8 +20,15 @@ pip install -e .
 
 **Dependencies**:
 
--TensorFlow
--scipy
+- TensorFlow
+- scipy
+
+**Important Files**
+
+- [model.py](baselines/baselines/ddpg/model.py) : change this to choose different architectures
+- [mujoco.py](mujocoInvertedPend.py) : to use different mujoco environments(write your own python file in similar manner for other environments). Here you can choose different hyperparameters, the defaults are carefully choosen with respect to inverted pendulum task.
+- [training.py](baselines/baselines/ddpg/training.py)
+- [ddpg.py](baselines/baselines/ddpg/ddpg.py)
 
 ##DDPG: Deep Deterministic Policy Gradients
 ---------------
@@ -43,12 +50,20 @@ The above update rule is a special limiting case of the Policy Gradient theorem 
  -------------
 
 For the 'InvertedPendulum-v2' task we see that the algorithm converging to good solution in about iterations. Here
-Exploration is achieved by adding nice to the actor input.
+Exploration is achieved by adding noise to the actor input.
+
+- Carefully Chosen Default Parameters for stable Learning can be in the file [mujocoInvertedPend.py](mujocoInvertedPend.py)
+- Model Architecture can be found in the file [model.py](baselines/baselines/ddpg/model.py)
+- Experimented by adding dropout and LeakyReLU in the architecture
+
+**Observation** : As show in the figure, addition of dropout and LeakyReLU(instead of Relu), significantly improved the quality of learning(in terms of learning rate and stability)
+
+![](Images/comparison.PNG)
 
 
 References
 --------
-1. Sutton et all. 1998[Policy Gradient Methods for RL with Function Approximation]( https://papers.nips.cc/paper/1713-policy-gradient-methods-for-reinforcement-learning-with-function-approximation.pdf)
+1. Sutton et all. 1998 [Policy Gradient Methods for RL with Function Approximation]( https://papers.nips.cc/paper/1713-policy-gradient-methods-for-reinforcement-learning-with-function-approximation.pdf)
 2. Silvet et all. 2016 [Deterministic Policy Gradient Algorithms
   ](http://proceedings.mlr.press/v32/silver14.pdf)
 3. [DDPG Blog](http://pemami4911.github.io/blog/2016/08/21/ddpg-rl.html)

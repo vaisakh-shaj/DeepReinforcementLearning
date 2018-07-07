@@ -29,7 +29,7 @@ def run(env_id, seed, noise_type, layer_norm, evaluation, **kwargs):
     rank = MPI.COMM_WORLD.Get_rank()
     if rank != 0:
         logger.set_level(logger.DISABLED)
-    logger.configure(dir=r'C:\Users\DELL\Desktop\GITHUB\DeepReinforcementLearning\5_Deep_Deterministic_Policy_Gradients\LOGS\CARTPOLE')
+    logger.configure(dir=r'C:\Users\DELL\Desktop\GITHUB\DeepReinforcementLearning\5_Deep_Deterministic_Policy_Gradients\LOGS')
     # Create envs.
     #env = ProstheticsEnv(visualize=True)
     env=gym.make(env_id)
