@@ -10,7 +10,7 @@ Contains codes and reports of running Deep RL techniques on standard simulated e
 2. [Policy Gradient - Actor Critic Networks](https://github.com/vaisakh-shaj/DeepReinforcementLearning/tree/master/2_Actor_Critic_and_Policy_Gradient)
 3. [Deep Q Learning and Double Deep Q Learning](https://github.com/vaisakh-shaj/DeepReinforcementLearning/tree/master/3_Deep_Double_Q_Learning_Atari_Games)
 4. [Model Based RL with Model Predictive Controller(MPC)](https://github.com/vaisakh-shaj/DeepReinforcementLearning/tree/master/4_ModelBasedRL_OptimalControllers)
-
+5. [Deep Deterministic Policy Gradients](https://github.com/vaisakh-shaj/DeepReinforcementLearning/tree/master/5_Deep_Deterministic_Policy_Gradients)
 
 ## Which RL algorithm to use ?
 

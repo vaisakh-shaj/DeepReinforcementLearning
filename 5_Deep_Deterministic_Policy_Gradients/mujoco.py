@@ -106,7 +106,7 @@ def parse_args():
     parser.add_argument('--gamma', type=float, default=0.99)
     parser.add_argument('--reward-scale', type=float, default=1.)
     parser.add_argument('--clip-norm', type=float, default=None)
-    parser.add_argument('--nb-epochs', type=int, default=50)  # with default settings, perform 1M steps total
+    parser.add_argument('--nb-epochs', type=int, default=100)  # with default settings, perform 1M steps total
     parser.add_argument('--nb-epoch-cycles', type=int, default=10)
     parser.add_argument('--nb-train-steps', type=int, default=80)  # per epoch cycle and MPI worker
     parser.add_argument('--nb-eval-steps', type=int, default=1000)  # per epoch cycle and MPI worker
