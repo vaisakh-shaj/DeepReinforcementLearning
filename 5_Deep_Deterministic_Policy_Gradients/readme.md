@@ -30,7 +30,7 @@ pip install -e .
 - [training.py](baselines/baselines/ddpg/training.py)
 - [ddpg.py](baselines/baselines/ddpg/ddpg.py)
 
-##DDPG: Deep Deterministic Policy Gradients
+DDPG: Deep Deterministic Policy Gradients
 ---------------
 
 You can find a detailed blog on this by me in [here](https://vaisakh-shaj.github.io/posts/2018/06/DDPG/).
