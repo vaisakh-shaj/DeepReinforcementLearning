@@ -58,7 +58,7 @@ Exploration is achieved by adding noise to the actor input.
 
 **Observation** : As show in the figure, addition of dropout and LeakyReLU(instead of Relu), significantly improved the quality of learning(in terms of learning rate and stability)
 
-![](Images/comparison.PNG)
+![](Images/comparison.png)
 
 
 References
