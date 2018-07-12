@@ -1,3 +1,12 @@
+"""
+Code to load an expert policy and generate roll-out data for behavioral cloning.
+Example usage:
+            %run run_expert.py experts/Hopper-v1.pkl Hopper-v2 --render --num_rollouts 10
+
+Dagger and Behaviour Clonning Implementation : @uthor : vamshi (vamshikumarkurva@gmail.com)
+
+
+"""
 import pickle
 import tensorflow as tf
 import numpy as np
@@ -179,10 +188,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-
-
-
-
