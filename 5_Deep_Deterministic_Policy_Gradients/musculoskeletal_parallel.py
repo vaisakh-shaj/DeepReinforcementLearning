@@ -14,11 +14,12 @@ from baselines.common.misc_util import (
     set_global_seeds,
     boolean_flag,
 )
-import baselines.ddpg.training_parallel as training
+import baselines.ddpg.training as training
 from baselines.ddpg.models import Actor, Critic
 from baselines.ddpg.memory import Memory
 from baselines.ddpg.noise import *
 from osim.env import ProstheticsEnv
+from baselines.common.vec_env.subproc_vec_env import SubprocVecEnv
 import pickle
 
 import gym
@@ -32,13 +33,23 @@ def run(env_id, seed, noise_type, layer_norm, evaluation, **kwargs):
         logger.set_level(logger.DISABLED)
     logger.configure(dir='/home/vaisakhs_shaj/Desktop/DeepReinforcementLearning/5_Deep_Deterministic_Policy_Gradients/LOGS/OSIM')
     # Create envs.
-    env = ProstheticsEnv(visualize=True)
-    env.change_model(model = '2D', difficulty = 0, prosthetic = True, seed=seed)
-        #env.seed(seed)
-    #env = bench.Monitor(env, logger.get_dir() and os.path.join(logger.get_dir(), str(rank)))
+    def make_env(env_id,seed):
+    	def _f():
+    		env = ProstheticsEnv(visualize=False)
+    		env.seed(seed)
+    		return env
+    	return _f
 
-    
-    eval_env = None
+    #env = bench.Monitor(env, logger.get_dir() and os.path.join(logger.get_dir(), str(rank)))
+    envs = [make_env(env_name, seed) for seed in range(nproc)]
+    envs = SubprocVecEnv(envs)
+
+    if evaluation and rank==0:
+        eval_env = gym.make(env_id)
+        eval_env = bench.Monitor(eval_env, os.path.join(logger.get_dir(), 'gym_eval'))
+        env = bench.Monitor(env, None)
+    else:
+        eval_env = None
 
     # Parse noise_type
     action_noise = None
@@ -61,7 +72,7 @@ def run(env_id, seed, noise_type, layer_norm, evaluation, **kwargs):
             raise RuntimeError('unknown noise type "{}"'.format(current_noise_type))
 
     # Configure components.
-    memory = Memory(limit=int(1.5e6), action_shape=env.action_space.shape, observation_shape=env.observation_space.shape)
+    memory = Memory(limit=int(1e6), action_shape=env.action_space.shape, observation_shape=env.observation_space.shape)
     critic = Critic(layer_norm=layer_norm)
     actor = Actor(nb_actions, layer_norm=layer_norm)
 
@@ -77,7 +88,7 @@ def run(env_id, seed, noise_type, layer_norm, evaluation, **kwargs):
     # Disable logging for rank != 0 to avoid noise.
     if rank == 0:
         start_time = time.time()
-    training.train(env=env, eval_env=eval_env, param_noise=param_noise,
+    training.train(env=envs, eval_env=eval_env, param_noise=param_noise,
         action_noise=action_noise, actor=actor, critic=critic, memory=memory, **kwargs)
     env.close()
     if eval_env is not None:
@@ -97,16 +108,16 @@ def parse_args():
     boolean_flag(parser, 'normalize-observations', default=True)
     parser.add_argument('--seed', help='RNG seed', type=int, default=0)
     parser.add_argument('--critic-l2-reg', type=float, default=1e-2)
-    parser.add_argument('--batch-size', type=int, default=1024)  # per MPI worker
-    parser.add_argument('--actor-lr', type=float, default=1e-9)
-    parser.add_argument('--critic-lr', type=float, default=1e-8)
+    parser.add_argument('--batch-size', type=int, default=128)  # per MPI worker
+    parser.add_argument('--actor-lr', type=float, default=1e-5)
+    parser.add_argument('--critic-lr', type=float, default=1e-4)
     boolean_flag(parser, 'popart', default=False)
     parser.add_argument('--gamma', type=float, default=0.99)
     parser.add_argument('--reward-scale', type=float, default=1.)
     parser.add_argument('--clip-norm', type=float, default=None)
-    parser.add_argument('--nb-epochs', type=int, default=2000)  # with default settings, perform 1M steps total
+    parser.add_argument('--nb-epochs', type=int, default=200)  # with default settings, perform 1M steps total
     parser.add_argument('--nb-epoch-cycles', type=int, default=10)
-    parser.add_argument('--nb-train-steps', type=int, default=60)  # per epoch cycle and MPI worker
+    parser.add_argument('--nb-train-steps', type=int, default=80)  # per epoch cycle and MPI worker
     parser.add_argument('--nb-eval-steps', type=int, default=100)  # per epoch cycle and MPI worker
     parser.add_argument('--nb-rollout-steps', type=int, default=100)  # per epoch cycle and MPI worker
     parser.add_argument('--noise-type', type=str, default='adaptive-param_0.2')  # choices are adaptive-param_xx, ou_xx, normal_xx, none

@@ -1,0 +1,36 @@
+Updating Model file from 30000 to latest format...
+Loaded model gait14dof22musc_pros from file /home/vaisakhs_shaj/anaconda3/envs/opensim-rl/lib/python3.6/site-packages/osim/env/../models/gait14dof22musc_pros_20180507.osim
+Model 'gait14dof22musc_pros' has subcomponents with duplicate name 'back'.
+The duplicate is being renamed to 'back_0'.
+Model 'gait14dof22musc_pros' has subcomponents with duplicate name 'pros_foot_r'.
+The duplicate is being renamed to 'pros_foot_r_0'.
+Updating Model file from 30000 to latest format...
+Loaded model gait14dof22musc_planar_pros from file /home/vaisakhs_shaj/anaconda3/envs/opensim-rl/lib/python3.6/site-packages/osim/env/../models/gait14dof22musc_planar_pros_20180507.osim
+Model 'gait14dof22musc_planar_pros' has subcomponents with duplicate name 'back'.
+The duplicate is being renamed to 'back_0'.
+Model 'gait14dof22musc_planar_pros' has subcomponents with duplicate name 'pros_foot_r'.
+The duplicate is being renamed to 'pros_foot_r_0'.
+Updating Model file from 30000 to latest format...
+Loaded model gait14dof22musc_pros from file /home/vaisakhs_shaj/anaconda3/envs/opensim-rl/lib/python3.6/site-packages/osim/env/../models/gait14dof22musc_pros_20180507.osim
+Model 'gait14dof22musc_pros' has subcomponents with duplicate name 'back'.
+The duplicate is being renamed to 'back_0'.
+Model 'gait14dof22musc_pros' has subcomponents with duplicate name 'pros_foot_r'.
+The duplicate is being renamed to 'pros_foot_r_0'.
+Updating Model file from 30000 to latest format...
+Loaded model gait14dof22musc_pros from file /home/vaisakhs_shaj/anaconda3/envs/opensim-rl/lib/python3.6/site-packages/osim/env/../models/gait14dof22musc_pros_20180507.osim
+Model 'gait14dof22musc_pros' has subcomponents with duplicate name 'back'.
+The duplicate is being renamed to 'back_0'.
+Model 'gait14dof22musc_pros' has subcomponents with duplicate name 'pros_foot_r'.
+The duplicate is being renamed to 'pros_foot_r_0'.
+Updating Model file from 30000 to latest format...
+Loaded model gait14dof22musc_pros from file /home/vaisakhs_shaj/anaconda3/envs/opensim-rl/lib/python3.6/site-packages/osim/env/../models/gait14dof22musc_pros_20180507.osim
+Model 'gait14dof22musc_pros' has subcomponents with duplicate name 'back'.
+The duplicate is being renamed to 'back_0'.
+Model 'gait14dof22musc_pros' has subcomponents with duplicate name 'pros_foot_r'.
+The duplicate is being renamed to 'pros_foot_r_0'.
+Updating Model file from 30000 to latest format...
+Loaded model gait14dof22musc_pros from file /home/vaisakhs_shaj/anaconda3/envs/opensim-rl/lib/python3.6/site-packages/osim/env/../models/gait14dof22musc_pros_20180507.osim
+Model 'gait14dof22musc_pros' has subcomponents with duplicate name 'back'.
+The duplicate is being renamed to 'back_0'.
+Model 'gait14dof22musc_pros' has subcomponents with duplicate name 'pros_foot_r'.
+The duplicate is being renamed to 'pros_foot_r_0'.

@@ -99,7 +99,7 @@ def parse_args():
     boolean_flag(parser, 'normalize-observations', default=True)
     parser.add_argument('--seed', help='RNG seed', type=int, default=0)
     parser.add_argument('--critic-l2-reg', type=float, default=1e-2)
-    parser.add_argument('--batch-size', type=int, default=128)  # per MPI worker
+    parser.add_argument('--batch-size', type=int, default=512)  # per MPI worker
     parser.add_argument('--actor-lr', type=float, default=5e-4)
     parser.add_argument('--critic-lr', type=float, default=5e-3)
     boolean_flag(parser, 'popart', default=False)
