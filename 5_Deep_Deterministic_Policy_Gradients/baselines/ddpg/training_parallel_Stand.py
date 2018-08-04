@@ -18,18 +18,18 @@ not_restore = ['fc1_voc12_c0', 'fc1_voc12_c1', 'fc1_voc12_c2', 'fc1_voc12_c3']
 restore_var = [v for v in tf.all_variables() if v.name not in not_restore] # Keep only the variables, whose name is not in the not_restore list.
 '''
 nproc=4
-load_memory=False
+load_memory=True
 restore=True
 def make_env(seed):
     def _f():
         
-        if seed%2==0:
-            env=ProstheticsEnv(visualize=False,integrator_accuracy = 3e-3)
-            env.change_model(model = '2D', difficulty = 2, prosthetic = True, seed=seed)
-        else:
+        #if seed%2==0:
+        env=ProstheticsEnv(visualize=False,integrator_accuracy = 3e-3)
+        env.change_model(model = '2D', difficulty = 2, prosthetic = False, seed=seed)
+        #else:
         
-            env=ProstheticsEnv(visualize=False,integrator_accuracy = 3e-3)
-            env.change_model(model = '3D', difficulty = 0, prosthetic = True, seed=seed)
+        #env=ProstheticsEnv(visualize=False,integrator_accuracy = 3e-3)
+        #env.change_model(model = '3D', difficulty = 0, prosthetic = True, seed=seed)
         
         '''
         if seed>=4 and seed<6: 
@@ -62,15 +62,14 @@ def train(env, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, render, pa
 
     logger.info('scaling actions by {} before executing in env'.format(max_action))
     if load_memory:
-        memory=pickle.load(open("/home/vaisakhs_shaj/Desktop/BIG-DATA/memory1000000.pickle","rb"))
+        memory=pickle.load(open("/home/vaisakhs_shaj/Desktop/BIG-DATA/memoryNorm300000.pickle","rb"))
         '''
         samps = memoryPrev.sample(batch_size=memoryPrev.nb_entries)
         print(len(samps['obs0'][1]))
         for i in range(memoryPrev.nb_entries):
             memory.append(samps['obs0'][i], samps['actions'][i], samps['rewards'][i], samps['obs1'][i],  samps['terminals1'][i])
-        '''
         print("=============memory loaded================")
-
+        '''
     agent = DDPG(actor, critic, memory, env.observation_space.shape, env.action_space.shape,
         gamma=gamma, tau=tau, normalize_returns=normalize_returns, normalize_observations=normalize_observations,
         batch_size=batch_size, action_noise=action_noise, param_noise=param_noise, critic_l2_reg=critic_l2_reg,
@@ -101,7 +100,7 @@ def train(env, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, render, pa
 
         agent.reset()
         if restore:
-            filename="/home/vaisakhs_shaj/Desktop/MODEL/tfSteps"+str(15000)+".model"
+            filename="/home/vaisakhs_shaj/Desktop/MODEL/normal/tfSteps"+str(25000)+".model"
             saver.restore(sess,filename)
             print("loaded!!!!!!!!!!!!!")
             #p=[v.name for v in tf.all_variables()]
@@ -259,12 +258,12 @@ def train(env, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, render, pa
                             eval_episode_rewards_history.append(eval_episode_reward)
                             eval_episode_reward = 0.
                 #print(episode_rewards_history) 
-            if (t)%20000 == 0:
-                fname="/home/vaisakhs_shaj/Desktop/BIG-DATA/memoryStill"+str(memory.nb_entries)+".pickle"
+            if (t)%7500 == 0:
+                fname="/home/vaisakhs_shaj/Desktop/BIG-DATA/memoryNorm"+str(memory.nb_entries)+".pickle"
                 pickle.dump(memory,open(fname,"wb"),protocol=-1)
             if t % 5000 == 0:
                 print("=======saving interim model==========")
-                filename="/home/vaisakhs_shaj/Desktop/MODEL/tfSteps"+str(t)+".model"
+                filename="/home/vaisakhs_shaj/Desktop/MODEL/normal/tfSteps"+str(t)+".model"
                 saver.save(sess,filename)
             mpi_size = MPI.COMM_WORLD.Get_size()
             

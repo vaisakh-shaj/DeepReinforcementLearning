@@ -10,6 +10,9 @@ from baselines.common.mpi_adam import MpiAdam
 import baselines.common.tf_util as U
 from baselines.common.mpi_running_mean_std import RunningMeanStd
 from mpi4py import MPI
+import os 
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 
 def normalize(x, stats):
     if stats is None:
@@ -36,7 +39,7 @@ def get_target_updates(vars, target_vars, tau):
     init_updates = []
     assert len(vars) == len(target_vars)
     for var, target_var in zip(vars, target_vars):
-        logger.info('  {} <- {}'.format(target_var.name, var.name))
+        #logger.info('  {} <- {}'.format(target_var.name, var.name))
         init_updates.append(tf.assign(target_var, var))
         soft_updates.append(tf.assign(target_var, (1. - tau) * target_var + tau * var))
     assert len(init_updates) == len(vars)
@@ -51,10 +54,10 @@ def get_perturbed_actor_updates(actor, perturbed_actor, param_noise_stddev):
     updates = []
     for var, perturbed_var in zip(actor.vars, perturbed_actor.vars):
         if var in actor.perturbable_vars:
-            logger.info('  {} <- {} + noise'.format(perturbed_var.name, var.name))
+            #logger.info('  {} <- {} + noise'.format(perturbed_var.name, var.name))
             updates.append(tf.assign(perturbed_var, var + tf.random_normal(tf.shape(var), mean=0., stddev=param_noise_stddev)))
         else:
-            logger.info('  {} <- {}'.format(perturbed_var.name, var.name))
+            #logger.info('  {} <- {}'.format(perturbed_var.name, var.name))
             updates.append(tf.assign(perturbed_var, var))
     assert len(updates) == len(actor.vars)
     return tf.group(*updates)
@@ -155,7 +158,7 @@ class DDPG(object):
         param_noise_actor = copy(self.actor)
         param_noise_actor.name = 'param_noise_actor'
         self.perturbed_actor_tf = param_noise_actor(normalized_obs0)
-        logger.info('setting up param noise')
+        #logger.info('setting up param noise')
         self.perturb_policy_ops = get_perturbed_actor_updates(self.actor, param_noise_actor, self.param_noise_stddev)
 
         # Configure separate copy for stddev adoption.
@@ -170,8 +173,8 @@ class DDPG(object):
         self.actor_loss = -tf.reduce_mean(self.critic_with_actor_tf)
         actor_shapes = [var.get_shape().as_list() for var in self.actor.trainable_vars]
         actor_nb_params = sum([reduce(lambda x, y: x * y, shape) for shape in actor_shapes])
-        logger.info('  actor shapes: {}'.format(actor_shapes))
-        logger.info('  actor params: {}'.format(actor_nb_params))
+        #logger.info('  actor shapes: {}'.format(actor_shapes))
+        #logger.info('  actor params: {}'.format(actor_nb_params))
         self.actor_grads = U.flatgrad(self.actor_loss, self.actor.trainable_vars, clip_norm=self.clip_norm)
         self.actor_optimizer = MpiAdam(var_list=self.actor.trainable_vars,
             beta1=0.9, beta2=0.999, epsilon=1e-08)
@@ -192,8 +195,8 @@ class DDPG(object):
             self.critic_loss += critic_reg
         critic_shapes = [var.get_shape().as_list() for var in self.critic.trainable_vars]
         critic_nb_params = sum([reduce(lambda x, y: x * y, shape) for shape in critic_shapes])
-        logger.info('  critic shapes: {}'.format(critic_shapes))
-        logger.info('  critic params: {}'.format(critic_nb_params))
+        #logger.info('  critic shapes: {}'.format(critic_shapes))
+        #logger.info('  critic params: {}'.format(critic_nb_params))
         self.critic_grads = U.flatgrad(self.critic_loss, self.critic.trainable_vars, clip_norm=self.clip_norm)
         self.critic_optimizer = MpiAdam(var_list=self.critic.trainable_vars,
             beta1=0.9, beta2=0.999, epsilon=1e-08)
@@ -258,6 +261,7 @@ class DDPG(object):
         else:
             actor_tf = self.actor_tf
         feed_dict = {self.obs0: [obs]}
+        #print(actor_tf)
         if compute_Q:
             action, q = self.sess.run([actor_tf, self.critic_with_actor_tf], feed_dict=feed_dict)
         else:

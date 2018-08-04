@@ -32,7 +32,7 @@ def run(env_id, seed, noise_type, layer_norm, evaluation, **kwargs):
         logger.set_level(logger.DISABLED)
     logger.configure(dir='/home/vaisakhs_shaj/Desktop/DeepReinforcementLearning/5_Deep_Deterministic_Policy_Gradients/LOGS/OSIM')
     # Create envs.
-    env = ProstheticsEnv(visualize=True)
+    env = ProstheticsEnv(visualize=False)
     env.change_model(model = '2D', difficulty = 0, prosthetic = True, seed=seed)
         #env.seed(seed)
     #env = bench.Monitor(env, logger.get_dir() and os.path.join(logger.get_dir(), str(rank)))
@@ -61,7 +61,7 @@ def run(env_id, seed, noise_type, layer_norm, evaluation, **kwargs):
             raise RuntimeError('unknown noise type "{}"'.format(current_noise_type))
 
     # Configure components.
-    memory = Memory(limit=int(1.5e6), action_shape=env.action_space.shape, observation_shape=env.observation_space.shape)
+    memory = Memory(limit=int(2e6), action_shape=env.action_space.shape, observation_shape=env.observation_space.shape)
     critic = Critic(layer_norm=layer_norm)
     actor = Actor(nb_actions, layer_norm=layer_norm)
 
@@ -97,16 +97,16 @@ def parse_args():
     boolean_flag(parser, 'normalize-observations', default=True)
     parser.add_argument('--seed', help='RNG seed', type=int, default=0)
     parser.add_argument('--critic-l2-reg', type=float, default=1e-2)
-    parser.add_argument('--batch-size', type=int, default=1024)  # per MPI worker
-    parser.add_argument('--actor-lr', type=float, default=1e-9)
-    parser.add_argument('--critic-lr', type=float, default=1e-8)
+    parser.add_argument('--batch-size', type=int, default=256)  # per MPI worker
+    parser.add_argument('--actor-lr', type=float, default=1e-5)
+    parser.add_argument('--critic-lr', type=float, default=1e-4)
     boolean_flag(parser, 'popart', default=False)
     parser.add_argument('--gamma', type=float, default=0.99)
     parser.add_argument('--reward-scale', type=float, default=1.)
     parser.add_argument('--clip-norm', type=float, default=None)
     parser.add_argument('--nb-epochs', type=int, default=2000)  # with default settings, perform 1M steps total
     parser.add_argument('--nb-epoch-cycles', type=int, default=10)
-    parser.add_argument('--nb-train-steps', type=int, default=60)  # per epoch cycle and MPI worker
+    parser.add_argument('--nb-train-steps', type=int, default=20)  # per epoch cycle and MPI worker
     parser.add_argument('--nb-eval-steps', type=int, default=100)  # per epoch cycle and MPI worker
     parser.add_argument('--nb-rollout-steps', type=int, default=100)  # per epoch cycle and MPI worker
     parser.add_argument('--noise-type', type=str, default='adaptive-param_0.2')  # choices are adaptive-param_xx, ou_xx, normal_xx, none
