@@ -14,7 +14,7 @@ from baselines.common.misc_util import (
     set_global_seeds,
     boolean_flag,
 )
-import baselines.ddpg.training_parallel as training
+import baselines.ddpg.training as training
 from baselines.ddpg.models import Actor, Critic
 from baselines.ddpg.memory import Memory
 from baselines.ddpg.noise import *
@@ -32,8 +32,8 @@ def run(env_id, seed, noise_type, layer_norm, evaluation, **kwargs):
         logger.set_level(logger.DISABLED)
     logger.configure(dir='/home/vaisakhs_shaj/Desktop/DeepReinforcementLearning/5_Deep_Deterministic_Policy_Gradients/LOGS/OSIM')
     # Create envs.
-    env = ProstheticsEnv(visualize=False)
-    env.change_model(model = '2D', difficulty = 0, prosthetic = True, seed=seed)
+    env = ProstheticsEnv(visualize=True)
+    env.change_model(model = '3D', difficulty = 0, prosthetic = True, seed=seed)
         #env.seed(seed)
     #env = bench.Monitor(env, logger.get_dir() and os.path.join(logger.get_dir(), str(rank)))
 

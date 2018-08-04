@@ -64,10 +64,10 @@ def train(env, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, render, pa
         sess.graph.finalize()
         # restore saved model, if required
         if restore:
-            filename="/home/vaisakhs_shaj/Desktop/MODEL/tfSteps"+str(120000)+".model"
+            filename="/home/vaisakhs_shaj/Desktop/MODEL/tfSteps"+str(30000)+".model"
             saver.restore(sess,filename)
             print("loaded!!!!!!!!!!!!!")
-            print(tf.trainable_variables())
+            #print(tf.trainable_variables())
             
 
         
@@ -148,6 +148,7 @@ def train(env, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, render, pa
                         saver,save and saver .restore depends on session and has to be inside the 
                         session.
                         '''
+                    '''
                         if memory.nb_entries >= learning_starts:
                             if memory.nb_entries % learning_starts==0:
                                 fname="/home/vaisakhs_shaj/Desktop/BIG-DATA/memory"+str(memory.nb_entries)+".pickle"
@@ -155,7 +156,7 @@ def train(env, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, render, pa
                                 filename="/home/vaisakhs_shaj/Desktop/MODEL/tf"+str(memory.nb_entries)+".model"
                                 saver.save(sess,filename)
                                 break
-                        
+                    '''    
 
                 # Train.
                 epoch_actor_losses = []
