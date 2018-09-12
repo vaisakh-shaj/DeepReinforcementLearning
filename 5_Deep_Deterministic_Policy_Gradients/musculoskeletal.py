@@ -33,7 +33,7 @@ def run(env_id, seed, noise_type, layer_norm, evaluation, **kwargs):
     logger.configure(dir='/home/vaisakhs_shaj/Desktop/DeepReinforcementLearning/5_Deep_Deterministic_Policy_Gradients/LOGS/OSIM')
     # Create envs.
     env = ProstheticsEnv(visualize=True)
-    env.change_model(model = '3D', difficulty = 0, prosthetic = True, seed=seed)
+    env.change_model(model = '2D', difficulty = 0, prosthetic = True, seed=seed)
         #env.seed(seed)
     #env = bench.Monitor(env, logger.get_dir() and os.path.join(logger.get_dir(), str(rank)))
 
@@ -98,8 +98,8 @@ def parse_args():
     parser.add_argument('--seed', help='RNG seed', type=int, default=0)
     parser.add_argument('--critic-l2-reg', type=float, default=1e-2)
     parser.add_argument('--batch-size', type=int, default=256)  # per MPI worker
-    parser.add_argument('--actor-lr', type=float, default=1e-5)
-    parser.add_argument('--critic-lr', type=float, default=1e-4)
+    parser.add_argument('--actor-lr', type=float, default=1e-15)
+    parser.add_argument('--critic-lr', type=float, default=1e-14)
     boolean_flag(parser, 'popart', default=False)
     parser.add_argument('--gamma', type=float, default=0.99)
     parser.add_argument('--reward-scale', type=float, default=1.)

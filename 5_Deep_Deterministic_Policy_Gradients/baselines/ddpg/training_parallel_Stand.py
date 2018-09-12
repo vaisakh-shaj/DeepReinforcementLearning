@@ -18,7 +18,7 @@ not_restore = ['fc1_voc12_c0', 'fc1_voc12_c1', 'fc1_voc12_c2', 'fc1_voc12_c3']
 restore_var = [v for v in tf.all_variables() if v.name not in not_restore] # Keep only the variables, whose name is not in the not_restore list.
 '''
 nproc=4
-load_memory=True
+load_memory=False
 restore=True
 def make_env(seed):
     def _f():
@@ -100,7 +100,7 @@ def train(env, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, render, pa
 
         agent.reset()
         if restore:
-            filename="/home/vaisakhs_shaj/Desktop/MODEL/normal/tfSteps"+str(25000)+".model"
+            filename=r"C:\Users\DELL\Desktop\MODELS\2d\tfSteps"+str(25000)+".model"
             saver.restore(sess,filename)
             print("loaded!!!!!!!!!!!!!")
             #p=[v.name for v in tf.all_variables()]

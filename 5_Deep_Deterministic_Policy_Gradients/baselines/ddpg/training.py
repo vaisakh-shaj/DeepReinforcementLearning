@@ -19,7 +19,7 @@ Additions
 3. printing cycles live
 4. load_memory=True
 '''
-load_memory=True
+load_memory=False
 restore=True
 def train(env, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, render, param_noise, actor, critic,
     normalize_returns, normalize_observations, critic_l2_reg, actor_lr, critic_lr, action_noise,
@@ -64,7 +64,7 @@ def train(env, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, render, pa
         sess.graph.finalize()
         # restore saved model, if required
         if restore:
-            filename="/home/vaisakhs_shaj/Desktop/MODEL/tfSteps"+str(30000)+".model"
+            filename=r"C:\Users\DELL\Desktop\MODELS\2d\tfSteps"+str(100000)+".model"
             saver.restore(sess,filename)
             print("loaded!!!!!!!!!!!!!")
             #print(tf.trainable_variables())
@@ -110,7 +110,7 @@ def train(env, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, render, pa
                             print(memory.nb_entries) 
                             sys.stdout.flush()
                         i=i+1
-                        print(i)
+                        #print(i)
                         # Execute next action.
                         if rank == 0 and render:
                             env.render()
@@ -128,7 +128,7 @@ def train(env, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, render, pa
                         #epoch_qs.append(q)
                         agent.store_transition(obs, action, r, new_obs, done)
                         obs = new_obs
-                        print(done)
+                        #print(done)
                         if done:
                             # Episode done.
                             epoch_episode_rewards.append(episode_reward)
@@ -237,7 +237,7 @@ def train(env, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, render, pa
             logger.dump_tabular()
             logger.info('')
             logdir = logger.get_dir()
-            print(logdir)
+            #print(logdir)
             if rank == 0 and logdir:
                 if hasattr(env, 'get_state'):
                     with open(os.path.join(logdir, 'env_state.pkl'), 'wb') as f:
