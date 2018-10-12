@@ -1,7 +1,7 @@
 # DeepReinforcementLearning
 Contains codes and reports of running Deep RL techniques on standard simulated environments like openAI Gym, Mujoco etc. The repository will be updated from time to time.
 
-Many of the initial algorithms are solved assignments from UC Berkley, CS 294 deep reinforcement learning fall 2017 Course. 
+Many of the initial algorithms are solved assignments from UC Berkley, [CS 294 deep reinforcement learning fall 2017 Course](http://rail.eecs.berkeley.edu/deeprlcourse-fa17/index.html). 
 1. Homework 1 : Imitation Learning
 2. Homework 2 : Policy Gradients
 3. Homework 3 : DQN
