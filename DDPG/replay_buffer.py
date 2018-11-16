@@ -48,3 +48,10 @@ class ReplayBuffer(object):
     def clear(self):
         self.buffer.clear()
         self.count = 0
+
+    def update(self):
+        L = len(self.buffer)
+        while len(self.buffer) > L-1000:
+            if self.count > 0:
+                self.buffer.popleft()
+                self.count -= 1

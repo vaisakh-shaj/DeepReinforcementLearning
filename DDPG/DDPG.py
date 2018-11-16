@@ -1,11 +1,14 @@
+
 """
 Implementation of DDPG - Deep Deterministic Policy Gradient
 Algorithm and hyperparameter details can be found here:
     http://arxiv.org/pdf/1509.02971v2.pdf
 The algorithm is tested on the Pendulum-v0 OpenAI gym task
 and developed with tflearn + Tensorflow
-Author: Patrick Emami
+Author: Vamshi Kumar Kurva
+improved upon the original code by Patric Emami
 """
+
 import tensorflow as tf
 import numpy as np
 import gym
@@ -14,6 +17,7 @@ import tflearn
 import argparse
 import pprint as pp
 import os
+import logz
 
 from replay_buffer import ReplayBuffer
 
@@ -254,12 +258,12 @@ def build_summaries():
 # ===========================
 
 def test(sess, env, args, actor, critic):
-    checkpoint_actor_dir = os.path.join(os.curdir, 'Actor')
+    checkpoint_actor_dir = os.path.join(os.curdir, 'Actor_InvertedPendulum')
     if not os.path.exists(checkpoint_actor_dir):
         os.makedirs(checkpoint_actor_dir)
     ckpt_1 = tf.train.get_checkpoint_state(checkpoint_actor_dir)
 
-    checkpoint_critic_dir = os.path.join(os.curdir, 'Critic')
+    checkpoint_critic_dir = os.path.join(os.curdir, 'Critic_InvertedPendulum')
     if not os.path.exists(checkpoint_critic_dir):
         os.makedirs(checkpoint_critic_dir)
     ckpt_2 = tf.train.get_checkpoint_state(checkpoint_critic_dir)
@@ -293,28 +297,43 @@ def test(sess, env, args, actor, critic):
     max_steps = env.spec.timestep_limit
     step = 0
 
+    from PIL import Image
+    frames = []
+
     while not done:
+        frames.append(Image.fromarray(env.render(mode='rgb_array')))
         a = actor.predict(np.reshape(s, (1, actor.s_dim)))
         s2, r, done, _ = env.step(a[0])
         total_reward += r
         step += 1
         s = s2
-        env.render()
+        # env.render()
         if step > max_steps:
             break
     print('total reward: ', total_reward)
 
+    with open('InvertedPendulum_gym_before.gif', 'wb') as f:  # change the path if necessary
+        im = Image.new('RGB', frames[0].size)
+        im.save(f, save_all=True, append_images=frames)
 
-def train(sess, env, args, actor, critic, actor_noise):
+
+def train(sess, env, args, actor, critic, actor_noise, logdir):
+    logz.configure_output_dir(logdir)
+    locals_ = locals()
+    params = {k: locals_[k] if k in locals_ else None for k in args}
+    print('params: ', params)
+    params['env'] = 'InvertedPendulum'
+    params['exp_name'] = '3layer'
+    logz.save_params(params)
     # Set up summary Ops
     summary_ops, summary_vars = build_summaries()
-    checkpoint_actor_dir = os.path.join(os.curdir, 'Actor')
+    checkpoint_actor_dir = os.path.join(os.curdir, 'Actor_InvertedPendulum')
     if not os.path.exists(checkpoint_actor_dir):
         os.makedirs(checkpoint_actor_dir)
     actor_prefix = os.path.join(checkpoint_actor_dir, "model.ckpt")
     ckpt_1 = tf.train.get_checkpoint_state(checkpoint_actor_dir)
 
-    checkpoint_critic_dir = os.path.join(os.curdir, 'Critic')
+    checkpoint_critic_dir = os.path.join(os.curdir, 'Critic_InvertedPendulum')
     if not os.path.exists(checkpoint_critic_dir):
         os.makedirs(checkpoint_critic_dir)
     critic_prefix = os.path.join(checkpoint_critic_dir, "model.ckpt")
@@ -353,7 +372,30 @@ def train(sess, env, args, actor, critic, actor_noise):
     # in other environments.
     # tflearn.is_training(True)
 
+    def testing():
+        env1 = gym.make(args['env'])
+        s = env1.reset()
+        done = False
+        total_reward = 0
+        max_steps = env1.spec.timestep_limit
+        step = 0
+
+        while not done:
+            a = actor.predict(np.reshape(s, (1, actor.s_dim)))
+            s2, r, done, _ = env1.step(a[0])
+            total_reward += r
+            step += 1
+            s = s2
+            # env.render()
+            if step > max_steps:
+                break
+        print('total steps: ', step)
+        print('total reward: ', total_reward)
+        return step, total_reward
+
     iter = 0
+    start = time.time()
+    best_step, best_rew = testing()
     for i in range(int(args['max_episodes'])):
 
         s = env.reset()
@@ -379,7 +421,7 @@ def train(sess, env, args, actor, critic, actor_noise):
             # Keep adding experience to the memory until
             # there are at least minibatch size samples
             batch_size = int(args['minibatch_size'])
-            if replay_buffer.size() > 10000:
+            if replay_buffer.size() > 100000:
                 iter += 1
                 s_batch, a_batch, r_batch, t_batch, s2_batch = \
                     replay_buffer.sample_batch(batch_size)
@@ -411,13 +453,30 @@ def train(sess, env, args, actor, critic, actor_noise):
                 # directly apply these gradients on actor params. No special loss to minimize
 
                 if iter%20 == 0:
-                    actor.saver.save(sess, actor_prefix)
-                    critic.saver.save(sess, critic_prefix)
+                    new_steps, new_rew = testing()
+                    if new_rew > best_rew:
+                        best_rew = new_rew
+                        actor.saver.save(sess, actor_prefix)
+                        critic.saver.save(sess, critic_prefix)
+                        print('model saved to disk.')
+                        actor.saver.restore(sess, ckpt_1.model_checkpoint_path)
+                        critic.saver.restore(sess, ckpt_2.model_checkpoint_path)
+                        best_step, best_rew = testing()
                     # print('actor model saved to: ', actor_prefix)
                     # print('critic model saved to: ', critic_prefix)
 
+                if iter%10 == 0:
+                    new_steps, new_rew = testing()
+                    logz.log_tabular("Time", time.time() - start)
+                    logz.log_tabular('Iteration', iter/10)
+                    logz.log_tabular('Reward', new_rew)
+                    logz.log_tabular('Steps', new_steps)
+                    logz.dump_tabular()
+
                 # Update target networks
                 if iter%50 == 0:
+                    replay_buffer.update()
+                    print('updating buffer')
                     print('updating target networks..')
                     actor.update_target_network()
                     critic.update_target_network()
@@ -439,7 +498,7 @@ def train(sess, env, args, actor, critic, actor_noise):
                 break
 
 
-def main(args):
+def main(args, logdir):
     with tf.Session() as sess:
 
         env = gym.make(args['env'])
@@ -465,7 +524,7 @@ def main(args):
         if args['test']:
             test(sess, env, args, actor, critic)
         else:
-            actor_noise = OrnsteinUhlenbeckActionNoise(mu=np.zeros(action_dim))
+            actor_noise = OrnsteinUhlenbeckActionNoise(mu=np.zeros(action_dim), sigma=0.4)
             if args['use_gym_monitor']:
                 if not args['render_env']:
                     env = wrappers.Monitor(
@@ -473,7 +532,7 @@ def main(args):
                 else:
                     env = wrappers.Monitor(env, args['monitor_dir'], force=True)
 
-            train(sess, env, args, actor, critic, actor_noise)
+            train(sess, env, args, actor, critic, actor_noise, logdir)
 
             if args['use_gym_monitor']:
                 env.monitor.close()
@@ -485,8 +544,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='provide arguments for DDPG agent')
 
     # agent parameters
-    parser.add_argument('--actor-lr', help='actor network learning rate', default=0.0001)
-    parser.add_argument('--critic-lr', help='critic network learning rate', default=0.001)
+    parser.add_argument('--actor-lr', help='actor network learning rate', default=0.00001)
+    parser.add_argument('--critic-lr', help='critic network learning rate', default=0.0001)
     parser.add_argument('--gamma', help='discount factor for critic updates', default=0.99)
     parser.add_argument('--tau', help='soft target update parameter', default=0.999)
     parser.add_argument('--buffer-size', help='max size of the replay buffer', default=1000000)
@@ -498,17 +557,23 @@ if __name__ == '__main__':
     parser.add_argument('--max-episodes', help='max num of episodes to do while training', default=50000)
     parser.add_argument('--max-episode-len', help='max length of 1 episode', default=1000)
     parser.add_argument('--render-env', help='render the gym env', action='store_true')
-    parser.add_argument('--test', help='set false to train', action='store_true', default=True)
+    parser.add_argument('--test', help='set false to train', action='store_true', default=False)
     parser.add_argument('--use-gym-monitor', help='record gym results', action='store_true')
-    parser.add_argument('--monitor-dir', help='directory for storing gym results', default='./results/gym_ddpg')
-    parser.add_argument('--summary-dir', help='directory for storing tensorboard info', default='./results/tf_ddpg')
+    parser.add_argument('--monitor-dir', help='directory for storing gym results', default='./results_InvertedPendulum/gym_ddpg')
+    parser.add_argument('--summary-dir', help='directory for storing tensorboard info', default='./results_InvertedPendulum/tf_ddpg')
 
-    parser.set_defaults(render_env=False)
+    parser.set_defaults(render_env=True)
     parser.set_defaults(use_gym_monitor=True)
 
     args = vars(parser.parse_args())
     print('test: ', args['test'])
 
+    import time
+    logdir = args['env']+'_'+time.strftime("%d-%m-%Y_%H-%M-%S")
+    logdir = os.path.join(os.curdir, logdir)
+    # if not (os.path.exists(logdir)):
+    #     os.makedirs(logdir)
+
     pp.pprint(args)
 
-main(args)
+main(args, logdir)
