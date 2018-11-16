@@ -24,7 +24,7 @@ Once the policy is learned and saved to the disk, activate the test flag to load
 
 The pendulum on the cart starts upright, and the goal is to prevent it from falling over. The system is controlled by applying a force of +1 or -1 to the cart. A reward of +1 is provided for every timestep that the pole remains upright. The episode ends when the pole is more than 15 degrees from vertical. Here is the rendering of a Random agent on the environment.
 
-![](Images/InvertedPendulum_gym_before.gif=50x50)
+![](Images/InvertedPendulum_gym_before.gif)
 
 Plot showing the reward as a function of the number of training iterations is shown below.
 
@@ -32,7 +32,7 @@ Plot showing the reward as a function of the number of training iterations is sh
 
 Rendering after the policy is learnt. Actor is a 3-layer network. At the end of training we are able to achieve a reward of 1000
 
-![](Images/InvertedPendulum_gym_after.gif=50x50)
+![](Images/InvertedPendulum_gym_after.gif)
 
 
 ## Experiment 2. Pendulum environment (Pendulum-v0)
