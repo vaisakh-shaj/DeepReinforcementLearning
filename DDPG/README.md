@@ -12,13 +12,15 @@ There is a request for OpenAI to support it that can be followed [here](https://
 The only file that you need to look at are `DDPG.py`. It contains the code to learn the policy, save the model and reload it back.
 
 **Example Usage**
-```python3.5 DDPG.py --env env_name --test True/False
+```
+python3.5 DDPG.py --env env_name --test True/False
+
 ```
 By default, Test flag is False, which allows us to learn the policy.
 Once the policy is learned and saved to the disk, activate the test flag to load the model and render the environment.
 
 
-**[Detailed Instructions](http://rail.eecs.berkeley.edu/deeprlcourse-fa17/f17docs/hw1fall2017.pdf)**
+
 
 ## Experiment 1. InvertedPendulum Environment (InvertedPendulum-v2)
 
