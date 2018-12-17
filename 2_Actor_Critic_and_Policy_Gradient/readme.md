@@ -87,7 +87,7 @@ Figure 6
 
  
 
-##Experiment 3: HALF CHEETAH
+## Experiment 3: HALF CHEETAH
 
 Code Block
 
