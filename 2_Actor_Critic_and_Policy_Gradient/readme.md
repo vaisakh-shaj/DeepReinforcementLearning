@@ -124,7 +124,7 @@ Figure 9
 **Observation 3** GAE(Generalized Advantage Return) is a weighted combinations of n-step returns.
 It introduces a new parameter lambda, which controls the tradeoff between bias and variance. 
 With lambda=0, the estimator becomes a simple actor-critic model with less variance but with bias.
-With lambda=1, estimator becomes the empirical sum of returns with average baseline. It has more variance because
+With lambda=1, advantage estimator becomes the empirical sum of returns with average baseline. It has more variance because
 of sum of terms but with less bias. Here the plot shows the average return for different values of lambda.
 
 ![](Images/GAE.png)
