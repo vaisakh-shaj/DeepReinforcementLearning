@@ -100,8 +100,6 @@ python train_pg.py HalfCheetah-v2 -ep 150 --discount 0.9 -b 40000 -rtg -l 3 -s 3
 joint are fixed, all the the others are controllable. Consequently, Half-Cheetah
 is a 6-degree-of-freedom walking robot.
 
- 
-
 ![](Images/half-ch.PNG)
 
 Figure 7
@@ -116,9 +114,28 @@ an average return above 150 before 100 iterations is given in the code block
 below. It used an unusually high batch size and a 5 layered deep neural network
 without a critic.
 
- 
+**Observation 2:** We also tested the variance reduction techniques with n-step returns and with critic.
+Here is the plot of average returns over no of iterations
 
+![](Images/critic_vs_nocritic.png)
  
+Figure 9
+
+**Observation 3** GAE(Generalized Advantage Return) is a weighted combinations of n-step returns.
+It introduces a new parameter lambda, which controls the tradeoff between bias and variance. 
+With lambda=0, the estimator becomes a simple actor-critic model with less variance but with bias.
+With lambda=1, estimator becomes the empirical sum of returns with average baseline. It has more variance because
+of sum of terms but with less bias. Here the plot shows the average return for different values of lambda.
+
+![](Images/GAE.png)
+
+Figure 10
+
+Here we can see that when lamba = 0.7, variance is minimum.
+
+All the experiments with n-step returns and GAE used the same actor model(2 layers with 20, 10 units successively)
+and same critic model(3 layers with 20, 15 and 10 units).
+
 
 ## REFERENCES
 
@@ -129,6 +146,8 @@ without a critic.
 2. A. G. Barto, R. S. Sutton, and C. W. Anderson, [“Neuronlike adaptive elements
 that can solve difficult learning control problems”](
 http://www.derongliu.org/adp/adp-cdrom/Barto1983.pdf)
+
+3. John Schulman, Philipp Moritz, Sergey Levine, Michael I. Jordan and Pieter Abbee [HIGH DIMENSIONAL CONTINUOUS CONTROL USING GENERALIZED ADVANTAGE ESTIMATION](https://arxiv.org/pdf/1506.02438.pdf)
 
 3. CS 294: Deep Reinforcement Learning, Fall 2017
 
