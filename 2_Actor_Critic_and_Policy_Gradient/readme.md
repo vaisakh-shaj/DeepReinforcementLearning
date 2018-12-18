@@ -120,11 +120,11 @@ without a critic.
 
 where,
 
-![](http://latex.codecogs.com/svg.latex?A(s_{t}%2Ca_{t})%3Dr(s_t%2Ca_t)%2B\gamma.V(s_{t%2B1})-V(s_t))
+![](http://latex.codecogs.com/svg.latex?A(s_{t}%2Ca_{t})%3Dr(s_t%2Ca_t)%2B\gamma.V^{\pi}_{\phi}(s_{t%2B1})-V^{\pi}_{\phi}(s_t))
 
 in case of simple actor-critic
 
-![](http://latex.codecogs.com/svg.latex?A(s_t%2Ca_t)%3D\sum_{t%27%3Dt}^{t%2Bn}\gamma^{t%27-t}r(s_{t%27}%2Ca_{t%27})+\gamma^{n}V(s_{t%27%2Bn})-V(s_{t%27})) 
+![](http://latex.codecogs.com/svg.latex?A^{\pi}_{n}(s_t%2Ca_t)%3D\sum_{t%27%3Dt}^{t%2Bn}\gamma^{t%27-t}r(s_{t%27}%2Ca_{t%27})+\gamma^{n}V^{\pi}_{\phi}(s_{t%27%2Bn})-V^{\pi}_{\phi}(s_{t%27})) 
 
 in case of n-step returns
 
@@ -136,9 +136,25 @@ Figure 9
 
 **Observation 3** GAE(Generalized Advantage Return) is a weighted combinations of n-step returns.
 It introduces a new parameter lambda, which controls the tradeoff between bias and variance. 
-With lambda=0, the estimator becomes a simple actor-critic model with less variance but with bias.
+
+![](http://latex.codecogs.com/svg.latex?A^{\pi}_{GAE}(s_t%2Ca_t)%3D\sum_{n%3D1}^{\infty}w_nA^{\pi}_{n}(s_t%2Ca_t))
+
+![](http://latex.codecogs.com/svg.latex?A^{\pi}_{GAE}(s_t%2Ca_t)%3D\sum_{t%27%3Dt}^{\infty}(\gamma\lambda)^{t%27-t}\delta_{t%27})
+
+and
+
+![](http://latex.codecogs.com/svg.latex?\delta_{t}%3Dr(s_t%2Ca_t)+\gamma%20V^{\pi}_{\phi}(s_{t%2B1})-V^{\pi}_{\phi}(s_t))
+
+When lambda=0, the estimator becomes a simple actor-critic model with less variance but with bias.
+
+![](http://latex.codecogs.com/svg.latex?A^{\pi}_{GAE}(s_t%2Ca_t)%3D\delta_{t}%3Dr(s_t%2Ca_t)+\gamma%20V^{\pi}_{\phi}(s_{t%2B1})-V^{\pi}_{\phi}(s_t))
+
 With lambda=1, advantage estimator becomes the empirical sum of returns with average baseline. It has more variance because
 of sum of terms but with less bias. Here the plot shows the average return for different values of lambda.
+
+![](http://latex.codecogs.com/svg.latex?A^{\pi}_{GAE}(s_t%2Ca_t)%3D\sum_{t%27%3Dt}^{\infty}(\gamma)^{t%27-t}\delta_{t%27}%20-%20V^{\pi}_{\phi}(s_t))
+
+
 
 ![](Images/GAE.png)
 
