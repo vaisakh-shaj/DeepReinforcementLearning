@@ -1,9 +1,11 @@
 Deep Reinforcement Learning Based Control in Continuous Action and State Spaces using Policy Gradients and Actor-Critic Networks
 ================================
- 
+
+![](Images/reinforce.png)
+
+![](Images/actor_critic.png)
 
 ## How To Use
-
 
 **Dependencies**
 
@@ -68,10 +70,7 @@ Figure 4
 python train_pg.py InvertedPendulum-v2 --render -n 100 -b 5000 -e 5 -rtg --exp_name lb_continuous_5_layered_DeepNeuralNet -l 3 -lr 1e-2
 ```
 
-
 ![](Images/pendulum_continuous.PNG)
-
- 
 
 Figure 5
 
@@ -79,15 +78,12 @@ Figure 5
     is shown in Fig 6. Its clear from the graph that the 5 layered feed forward
     neural network learned better policies in lesser number of iterations.
 
-
-
 ![](Images/inverted.png)
 
 Figure 6
 
- 
 
-## Experiment 3: HALF CHEETAH
+## Experiment 3: HALF CHEETAH(Continuous Actions)
 
 Code Block
 
@@ -155,7 +151,6 @@ of sum of terms but with less bias. Here the plot shows the average return for d
 ![](http://latex.codecogs.com/svg.latex?A^{\pi}_{GAE}(s_t%2Ca_t)%3D\sum_{t%27%3Dt}^{\infty}(\gamma)^{t%27-t}\delta_{t%27}%20-%20V^{\pi}_{\phi}(s_t))
 
 
-
 ![](Images/GAE.png)
 
 Figure 10
@@ -168,7 +163,6 @@ and same critic model(3 layers with 20, 15 and 10 units).
 
 ## REFERENCES
 
- 
 
 1. Paweł Wawrzynski, [Learning to Control a 6-Degree-of-Freedom Walking Robot](http://prac.elka.pw.edu.pl//~pwawrzyn/pub-s/0601_SLEAC.pdf) 
 
