@@ -115,7 +115,11 @@ below. It used an unusually high batch size and a 5 layered deep neural network
 without a critic.
 
 **Observation 2:** We also tested the variance reduction techniques with n-step returns and with critic.
-Here is the plot of average returns over no of iterations
+![](http://latex.codecogs.com/svg.latex?\nabla_{\theta}J(\theta)%3D\sum_{i%3D1}^{N}\sum_{t%3D1}^{T}\nabla_{\theta}\log\pi_{\theta}(a_{it}/s_{it})%20A(s_{it}%2Ca_{it}))
+where,
+![](http://latex.codecogs.com/svg.latex?A(s_{t}%2Ca_{t})%3Dr(s_t%2Ca_t)%2B\gamma.V(s_{t%2B1})-V(s_t)) in case of simple actor-critic
+![](http://latex.codecogs.com/svg.latex?A(s_t%2Ca_t)%3D\sum_{t%27%3Dt}^{t%2Bn}\gamma^{t%27-t}r(s_{t%27}%2Ca_{t%27})+\gamma^{n}V(s_{t%27%2Bn})-V(s_{t%27})) for n-step returns
+Here is the plot of average returns over no of iterations. n-step return estimate is supposed to have less variance by cutting the track after n-steps.
 
 ![](Images/critic_vs_nocritic.png)
  
