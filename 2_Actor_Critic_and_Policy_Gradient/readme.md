@@ -127,7 +127,8 @@ in case of n-step returns
 Here is the plot of average returns over no of iterations. n-step return estimate is supposed to have less variance by cutting the track after n-steps.
 
 ![](Images/critic_vs_nocritic.png)
- 
+
+
 Figure 9
 
 **Observation 3** GAE(Generalized Advantage Return) is a weighted combinations of n-step returns.
