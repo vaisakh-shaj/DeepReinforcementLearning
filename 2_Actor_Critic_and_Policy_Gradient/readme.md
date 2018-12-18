@@ -115,6 +115,7 @@ below. It used an unusually high batch size and a 5 layered deep neural network
 without a critic.
 
 **Observation 2:** We also tested the variance reduction techniques with n-step returns and with critic.
+
 ![](http://latex.codecogs.com/svg.latex?\nabla_{\theta}J(\theta)%3D\sum_{i%3D1}^{N}\sum_{t%3D1}^{T}\nabla_{\theta}\log\pi_{\theta}(a_{it}/s_{it})%20A(s_{it}%2Ca_{it}))
 
 where,
