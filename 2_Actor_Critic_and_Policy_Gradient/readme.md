@@ -11,7 +11,7 @@ Deep Reinforcement Learning Based Control in Continuous Action and State Spaces 
 
 -TensorFlow   
 -MuJoCo version 1.31 /1.51  
--OpenAI Gym  
+-OpenAI Gym
 -OpenCV
 -Microsoft Visual C++ 
 
