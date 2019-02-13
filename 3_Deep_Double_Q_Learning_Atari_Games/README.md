@@ -22,6 +22,31 @@ Reinforcement Learning Based Control using High Dimensional Sensory Inputs - Dee
 python run_dqn_atari.py
 ```
 
+## Introduction:
+
+## Intro:
+
+Q-learning is a model-free algorithm. It doesn't assume anything about state-transition probabilities. Neither does it tries to learn these transitions. It estimates the good and bad actions based on trial and error by sampling actions and recieving rewards.The optimal state-action value function obey an important identity known as Bellman equation, which corresponds to an implicit optimal policy.
+
+![](http://latex.codecogs.com/svg.latex?Q^{*}(s%2Ca)%3DR(s%2Ca)%2B\gamma\max_{a%27}Q^{*}(s%27%2Ca%27))
+
+
+The basic idea is to estimate the action value function, by using the Bellman equation as iterative update.
+
+![](Images/onlineDQN.png)
+
+
+The online Q-learning mentioned above has some challenges, which makes it difficult to converge.
+
+1. Strongly corelated samples over successive iterations.
+	- To remove the correlation between samples, [Playing Atari with Deep Reinforcement Learning](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) paper suggested using a buffer called Experience-replay buffe, where we store the agent's experiences at each time-step, pooled over many episodes. Select a mini-batch of samples everytime to make an update.
+2. Trying to catch a moving target, i.e. target value is a function of traget itself
+	- To make the targets in the inner loop as constants, use the target networks to generate the targets and update the target networks only once in a while. This way, we are trying to catch stationary targets for a while.
+3. Exploration vs exploitation problem: How to select actions during training? Should the agent trust the learnt values to select actions? or try some other options hoping they may give better rewards.
+	- Use espilon-greedy approach. The agent will pick a random action with probability epsilon and the action according to the current estimates with probability 1-epsilon. Start with an exploration schedule that assigns large value to epsilon initially and reduces the value over iterations. 
+
+![](Images/classicDQN.png)
+
 
 **[Detailed Instructions](http://rail.eecs.berkeley.edu/deeprlcourse-fa17/f17docs/hw3.pdf)**
  
@@ -84,8 +109,6 @@ Figure 4: Graph from our experiments(above) and [paper](file:///C:/Users/DELL/Do
 
 ## REFERENCES
 
- 
-
 1. Volodymyr Mnih et all [Playing Atari with Deep Reinforcement Learning](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) 
 
 2. Volodymyr Mnih et all [“Human-level control through deep reinforcement
@@ -101,96 +124,6 @@ very effective trick to improve performance of deep Q-learning.](file:///C:/User
 
 6. CS 294: Deep Reinforcement Learning, Fall 2017
 
-
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
-### References
-
-1.  Mnih, Volodymyr, et al. "Human-level control through deep reinforcement
-    learning." *Nature* 518.7540 (2015): 529.
-
-2. CS 294: Deep Reinforcement Learning, Fall 2017
 
  
 

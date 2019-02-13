@@ -1,15 +1,17 @@
 Deep Reinforcement Learning Based Control in Continuous Action and State Spaces using Policy Gradients and Actor-Critic Networks
 ================================
- 
+
+![](Images/reinforce.png)
+
+![](Images/actor_critic.png)
 
 ## How To Use
-
 
 **Dependencies**
 
 -TensorFlow   
 -MuJoCo version 1.31 /1.51  
--OpenAI Gym  
+-OpenAI Gym
 -OpenCV
 -Microsoft Visual C++ 
 
@@ -20,8 +22,6 @@ python train_pg.py InvertedPendulum-v2 --render -n 100 -b 5000 -e 5 -rtg --exp_n
 ```
 
 **[Detailed Instructions](http://rail.eecs.berkeley.edu/deeprlcourse-fa17/f17docs/hw2_final.pdf)**
-
-
 
 ## Experiment 1: Cart Pole with Discrete Action 
 
@@ -68,10 +68,7 @@ Figure 4
 python train_pg.py InvertedPendulum-v2 --render -n 100 -b 5000 -e 5 -rtg --exp_name lb_continuous_5_layered_DeepNeuralNet -l 3 -lr 1e-2
 ```
 
-
 ![](Images/pendulum_continuous.PNG)
-
- 
 
 Figure 5
 
@@ -79,15 +76,12 @@ Figure 5
     is shown in Fig 6. Its clear from the graph that the 5 layered feed forward
     neural network learned better policies in lesser number of iterations.
 
-
-
 ![](Images/inverted.png)
 
 Figure 6
 
- 
 
-##Experiment 3: HALF CHEETAH
+## Experiment 3: HALF CHEETAH(Continuous Actions)
 
 Code Block
 
@@ -99,8 +93,6 @@ python train_pg.py HalfCheetah-v2 -ep 150 --discount 0.9 -b 40000 -rtg -l 3 -s 3
 “paws” of Half-Cheetah will also be called joints. The angles of 4-th and 5-th
 joint are fixed, all the the others are controllable. Consequently, Half-Cheetah
 is a 6-degree-of-freedom walking robot.
-
- 
 
 ![](Images/half-ch.PNG)
 
@@ -116,19 +108,68 @@ an average return above 150 before 100 iterations is given in the code block
 below. It used an unusually high batch size and a 5 layered deep neural network
 without a critic.
 
- 
+**Observation 2:** We also tested the variance reduction techniques with n-step returns and with critic.
 
- 
+![](http://latex.codecogs.com/svg.latex?\nabla_{\theta}J(\theta)%3D\sum_{i%3D1}^{N}\sum_{t%3D1}^{T}\nabla_{\theta}\log\pi_{\theta}(a_{it}/s_{it})%20A(s_{it}%2Ca_{it}))
+
+where,
+
+![](http://latex.codecogs.com/svg.latex?A(s_{t}%2Ca_{t})%3Dr(s_t%2Ca_t)%2B\gamma.V^{\pi}_{\phi}(s_{t%2B1})-V^{\pi}_{\phi}(s_t))
+
+in case of simple actor-critic
+
+![](http://latex.codecogs.com/svg.latex?A^{\pi}_{n}(s_t%2Ca_t)%3D\sum_{t%27%3Dt}^{t%2Bn}\gamma^{t%27-t}r(s_{t%27}%2Ca_{t%27})+\gamma^{n}V^{\pi}_{\phi}(s_{t%27%2Bn})-V^{\pi}_{\phi}(s_{t%27})) 
+
+in case of n-step returns
+
+Here is the plot of average returns over no of iterations. n-step return estimate is supposed to have less variance by cutting the track after n-steps.
+
+![](Images/critic_vs_nocritic.png)
+
+
+Figure 9
+
+**Observation 3** GAE(Generalized Advantage Return) is a weighted combinations of n-step returns.
+It introduces a new parameter lambda, which controls the tradeoff between bias and variance. 
+
+![](http://latex.codecogs.com/svg.latex?A^{\pi}_{GAE}(s_t%2Ca_t)%3D\sum_{n%3D1}^{\infty}w_nA^{\pi}_{n}(s_t%2Ca_t))
+
+![](http://latex.codecogs.com/svg.latex?A^{\pi}_{GAE}(s_t%2Ca_t)%3D\sum_{t%27%3Dt}^{\infty}(\gamma\lambda)^{t%27-t}\delta_{t%27})
+
+and
+
+![](http://latex.codecogs.com/svg.latex?\delta_{t}%3Dr(s_t%2Ca_t)+\gamma%20V^{\pi}_{\phi}(s_{t%2B1})-V^{\pi}_{\phi}(s_t))
+
+When lambda=0, the estimator becomes a simple actor-critic model with less variance but with bias.
+
+![](http://latex.codecogs.com/svg.latex?A^{\pi}_{GAE}(s_t%2Ca_t)%3D\delta_{t}%3Dr(s_t%2Ca_t)+\gamma%20V^{\pi}_{\phi}(s_{t%2B1})-V^{\pi}_{\phi}(s_t))
+
+With lambda=1, advantage estimator becomes the empirical sum of returns with average baseline. It has more variance because
+of sum of terms but with less bias. Here the plot shows the average return for different values of lambda.
+
+![](http://latex.codecogs.com/svg.latex?A^{\pi}_{GAE}(s_t%2Ca_t)%3D\sum_{t%27%3Dt}^{\infty}(\gamma)^{t%27-t}\delta_{t%27}%20-%20V^{\pi}_{\phi}(s_t))
+
+
+![](Images/GAE.png)
+
+Figure 10
+
+Here we can see that when lamba = 0.7, variance is minimum.
+
+All the experiments with n-step returns and GAE used the same actor model(2 layers with 20, 10 units successively)
+and same critic model(3 layers with 20, 15 and 10 units).
+
 
 ## REFERENCES
 
- 
 
 1. Paweł Wawrzynski, [Learning to Control a 6-Degree-of-Freedom Walking Robot](http://prac.elka.pw.edu.pl//~pwawrzyn/pub-s/0601_SLEAC.pdf) 
 
 2. A. G. Barto, R. S. Sutton, and C. W. Anderson, [“Neuronlike adaptive elements
 that can solve difficult learning control problems”](
 http://www.derongliu.org/adp/adp-cdrom/Barto1983.pdf)
+
+3. John Schulman, Philipp Moritz, Sergey Levine, Michael I. Jordan and Pieter Abbee [HIGH DIMENSIONAL CONTINUOUS CONTROL USING GENERALIZED ADVANTAGE ESTIMATION](https://arxiv.org/pdf/1506.02438.pdf)
 
 3. CS 294: Deep Reinforcement Learning, Fall 2017
 

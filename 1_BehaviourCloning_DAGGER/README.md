@@ -1,5 +1,16 @@
 # Imitation Learning(Behaviour Cloning and DAGGER)
 
+Behaviour cloning/Imitation learning is a supervised learning after collecting samples from the simulation environment. In reality, most of the times
+the expected trajectory after training differs from the training trajectory because of accumulation of errors i.e., distribution of data at test time is 
+different from that of training time.
+
+![](Images/error.png)
+
+Dagger(Dataset Aggregation) addresses this problem by colecting the data from test distribution, labelling by human
+expert and repeating the process. 
+
+![](Images/Dagger.png)
+
 **Dependencies**:
 -TensorFlow   
 -MuJoCo version 1.31 /1.51  
