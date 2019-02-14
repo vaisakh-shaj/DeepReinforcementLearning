@@ -25,13 +25,13 @@ These algorithms estimate the value-function or Q-function of the current policy
 
 ![](http://latex.codecogs.com/svg.latex?V^{\pi}(s_t)%3DR(s_t%2Ca_t)%2B\sum_{a_t}\pi(a_t%2Fs_t)\Big(\sum_{s_{t%27}}P(s_{t%27}%2Fs_t%2Ca_t)V^{\pi}(s_{t%27})\Big))
 
-After sampling the current state, action, next state and the reward, estimate the value function using the following bootstrapped estimate
+After sampling the current state, action, next state and the reward, fit the value function using the following bootstrapped estimate
 
 ![](http://latex.codecogs.com/svg.latex?V^{\pi}(s_t)%3DR(s_t%2Ca_t)%2B\gamma%20V^{\pi}(s_{t%27}))
 
 ![](Images/actor_critic.png)
 
-Note: Actor-critic is also an on-policy algorithm.
+Note: Actor-critic is also an on-policy algorithm. Samples generated have to be from the current policy.
 
 ## How To Use
 
@@ -193,13 +193,15 @@ and same critic model(3 layers with 20, 15 and 10 units).
 
 1. Paweł Wawrzynski, [Learning to Control a 6-Degree-of-Freedom Walking Robot](http://prac.elka.pw.edu.pl//~pwawrzyn/pub-s/0601_SLEAC.pdf) 
 
-2. A. G. Barto, R. S. Sutton, and C. W. Anderson, [“Neuronlike adaptive elements
+2. Ronald J. Williams, [simple statistical gradient-following algorithms for connectionist reinforcement learning](http://www-anw.cs.umass.edu/~barto/courses/cs687/williams92simple.pdf) 
+
+3. A. G. Barto, R. S. Sutton, and C. W. Anderson, [“Neuronlike adaptive elements
 that can solve difficult learning control problems”](
 http://www.derongliu.org/adp/adp-cdrom/Barto1983.pdf)
 
-3. John Schulman, Philipp Moritz, Sergey Levine, Michael I. Jordan and Pieter Abbee [HIGH DIMENSIONAL CONTINUOUS CONTROL USING GENERALIZED ADVANTAGE ESTIMATION](https://arxiv.org/pdf/1506.02438.pdf)
+4. John Schulman, Philipp Moritz, Sergey Levine, Michael I. Jordan and Pieter Abbee [HIGH DIMENSIONAL CONTINUOUS CONTROL USING GENERALIZED ADVANTAGE ESTIMATION](https://arxiv.org/pdf/1506.02438.pdf)
 
-3. CS 294: Deep Reinforcement Learning, Fall 2017
+5. CS 294: Deep Reinforcement Learning, Fall 2017
 
  
 
