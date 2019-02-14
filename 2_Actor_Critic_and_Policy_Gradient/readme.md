@@ -1,7 +1,7 @@
 Deep Reinforcement Learning Based Control in Continuous Action and State Spaces using Policy Gradients and Actor-Critic Networks
 ================================
 
-# Policy Gradients:
+## Policy Gradients:
 
 The aim of any RL algorithm is to maximize the expected reward from any given state.
 
@@ -19,17 +19,19 @@ The second step of the algorithm, which is computing the gradients is similar to
 
 Note: Policy Gradients is an on-policy algorithm, i.e. everytime the network/policy gets updated, we need to generate new samples from the updated policy.
 
-# Actor-critic Algorithms:
+## Actor-critic Algorithms:
 
 These algorithms estimate the value-function or Q-function of the current policy using the critic network and uses it to improve the policy(Actor network). In general, value function is estimated using the critic network.
 
 ![](http://latex.codecogs.com/svg.latex?V^{\pi}(s_t)%3DR(s_t%2Ca_t)%2B\sum_{a_t}\pi(a_t%2Fs_t)\Big(\sum_{s_{t%27}}P(s_{t%27}%2Fs_t%2Ca_t)V^{\pi}(s_{t%27})\Big))
 
-After sampling $$ s_i, a_i, s_{i+1}, r(s_i, a_i) $$, estimate the value function using the following bootstrapped estimate
+After sampling the current state, action, next state and the reward, estimate the value function using the following bootstrapped estimate
 
 ![](http://latex.codecogs.com/svg.latex?V^{\pi}(s_t)%3DR(s_t%2Ca_t)%2B\gamma%20V^{\pi}(s_{t%27}))
 
 ![](Images/actor_critic.png)
+
+Note: Actor-critic is also an on-policy algorithm.
 
 ## How To Use
 
