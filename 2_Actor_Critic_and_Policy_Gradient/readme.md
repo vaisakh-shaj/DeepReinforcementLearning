@@ -1,7 +1,33 @@
 Deep Reinforcement Learning Based Control in Continuous Action and State Spaces using Policy Gradients and Actor-Critic Networks
 ================================
 
+# Policy Gradients:
+
+The aim of any RL algorithm is to maximize the expected reward from any given state.
+
+![](http://latex.codecogs.com/svg.latex?\theta^{*}%3Darg\max_{\theta}E\Big[\sum_{t}R(s_t%2Ca_t)\Big])
+
+Policy Gradients directly differentiates the above objective to maximize the reward, which gives the REINFORCE algorithm. The name is an acronym for 'REward Increment = Non-negative Factor *times* Offset Reinforcement *times* Characteristic Eligibility' which is mentioned in [simple statistical gradient-following algorithms for connectionist reinforcement learning](http://www-anw.cs.umass.edu/~barto/courses/cs687/williams92simple.pdf).
+
+
 ![](Images/reinforce.png)
+
+The second step of the algorithm, which is computing the gradients is similar to that of maximum-likelihood, except for two changes.
+
+1. In supervised learning, we have access to the correct label for every input. But in Ploicy gradients, we sample an action from the policy and use it as the label. But the problem is we don't know whether the action is good or bad until the end of the episode. This is called the '*Credit assignment*' problem. But, if an action leads to more good actions over the time than the bad ones, it's likely to recieve more positive updates over the time.
+2. The gradients are multiplied by the cumulative expected reward, which means the actions that leads to good outcomes are encouraged and the ones that leads to bad outcomes are discouraged.
+
+Note: Policy Gradients is an on-policy algorithm, i.e. everytime the network/policy gets updated, we need to generate new samples from the updated policy.
+
+# Actor-critic Algorithms:
+
+These algorithms estimate the value-function or Q-function of the current policy using the critic network and uses it to improve the policy(Actor network). In general, value function is estimated using the critic network.
+
+![](http://latex.codecogs.com/svg.latex?V^{\pi}(s_t)%3DR(s_t%2Ca_t)%2B\sum_{a_t}\pi(a_t%2Fs_t)\Big(\sum_{s_{t%27}}P(s_{t%27}%2Fs_t%2Ca_t)V^{\pi}(s_{t%27})\Big))
+
+After sampling $$ s_i, a_i, s_{i+1}, r(s_i, a_i) $$, estimate the value function using the following bootstrapped estimate
+
+![](http://latex.codecogs.com/svg.latex?V^{\pi}(s_t)%3DR(s_t%2Ca_t)%2B\gamma%20V^{\pi}(s_{t%27}))
 
 ![](Images/actor_critic.png)
 
