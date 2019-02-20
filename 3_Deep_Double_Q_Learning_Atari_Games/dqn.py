@@ -144,10 +144,14 @@ def learn(env,
         max_a=tf.argmax(q_func(obs_tp1_float,num_actions,scope="q_func", reuse=True),axis=1) # [NOTE]: reuse=True since sharing 
                                                                                                   # variables 
         q_max_a=tf.reduce_sum(tf.multiply(q_next,tf.one_hot(max_a, depth=num_actions)),axis=1)
+        # q_max_a = tf.gather_nd(q_next, tf.stack([tf.range(batch_size), max_a], axis=1))
+
         q_current_label = rew_t_ph + (1-done_mask_ph)*gamma * q_max_a
     
-    q_current_a = tf.reduce_sum(tf.multiply(q_current,tf.one_hot(act_t_ph, depth=num_actions)),axis=1) #[NOTE]
-                                                                      #other implemenation by converting act_t_ph to on_hot
+    q_current_a = tf.reduce_sum(tf.multiply(q_current,tf.one_hot(act_t_ph, depth=num_actions)),axis=1)  #other implemenation by converting act_t_ph to on_hot
+    # q_current_a = tf.gather_nd(q_current, tf.stack([tf.range(batch_size), act_t_ph], axis=1))
+
+
     #assert type(act_t_ph)==list
     #print(act_t_ph)
     #q_current_a =  tf.gather_nd(q_current,act_t_ph)
@@ -155,6 +159,8 @@ def learn(env,
     #total_error = tf.losses.mean_squared_error(labels= tf.stop_gradient(q_current_label),predictions= q_current_a)
                                                        #[NOTE]: tf.stop_gradient
     #total_error = 0.5 * tf.reduce_sum(tf.square(q_current_a - tf.stop_gradient(q_current_label)))
+
+    # stop the gradient through the target network, by using stop_gradient to target
     total_error=tf.losses.huber_loss(labels= tf.stop_gradient(q_current_label),predictions= q_current_a)
     q_func_vars = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='q_func')
     target_q_func_vars = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='target_q_func')
@@ -171,6 +177,9 @@ def learn(env,
     for var, var_target in zip(sorted(q_func_vars,        key=lambda v: v.name),
                                sorted(target_q_func_vars, key=lambda v: v.name)):
         update_target_fn.append(var_target.assign(var))
+
+        # Polyak averaging
+        # update_target_fn.append(0.01*var + 0.99*var_target)
     update_target_fn = tf.group(*update_target_fn)
 
     # construct the replay buffer
