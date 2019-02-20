@@ -87,7 +87,7 @@ Figure 3
 
 ## Experiment 2: Improving Performance using Double Q Learning
  
-The popular Deep Q-learning algorithm is known to overestimate action values under certain conditions.This makes it more likely to select overestimated values, resulting in overoptimistic value estimates. A series of experiments conducted by DeepmMind on Atari games showed that these overestimations are harming the resulting policies (empirically). The empirical results also showed that Double DQN not just learns more accurate value estimates, but also better policies. Overoptimism does not always adversely affect the quality of the learned policy. For example, DQN achieves optimal behavior in Pong despite slightly overestimating the policy value. Nevertheless, reducing  overestimations  can  significantly benefit the stability of learning.
+The popular Deep Q-learning algorithm is known to overestimate action values under certain conditions.This makes it more likely to select overestimated values, resulting in overoptimistic value estimates. A series of experiments conducted by DeepMind on Atari games showed that these overestimations are harming the resulting policies (empirically). The empirical results also showed that Double DQN not just learns more accurate value estimates, but also better policies. Overoptimism does not always adversely affect the quality of the learned policy. For example, DQN achieves optimal behavior in Pong despite slightly overestimating the policy value. Nevertheless, reducing  overestimations  can  significantly benefit the stability of learning.
 
 To prevent overestimation, double DQN can decouple the selection from the evaluation.In double DQN use the current network(not the target network) to select actions in the Q Learning Bellman Equation, and use the target network to select the action values.  
 
@@ -101,6 +101,8 @@ As shown in figure below, for the same learning rate, the Double DQN seems to be
 
 
 ![](https://github.com/vaisakh-shaj/DeepReinforcementLearning/blob/master/3_Deep_Double_Q_Learning_Atari_Games/Images/ddqn-paper.PNG)
+
+
 Figure 4: Graph from our experiments(above) and [paper](https://arxiv.org/pdf/1509.06461.pdf)(below).
 
 ## REFERENCES
