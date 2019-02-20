@@ -46,8 +46,15 @@ Equation [1](https://www.codecogs.com/eqnedit.php?latex=\begin{aligned}%20\theta
 
 The above update rule is a special limiting case of the Policy Gradient theorem and its convergence to a locally optimal policy is proven. This is the policy gradient explanation of the algorithm and hence the name DD-Policy Gradient(For more details refer [2]).
 
- Experiment 1: Expected Reward vs Iterations for Continuous Control tasks
+![](Images/DDPG_algo.png)
+
+
+ Experiment 1: Inverted Pendulum-v2
  -------------
+The pendulum on the cart starts upright, and the goal is to prevent it from falling over. The system is controlled by applying a force of +1 or -1 to the cart. A reward of +1 is provided for every timestep that the pole remains upright. The episode ends when the pole is more than 15 degrees from vertical. Here is the rendering of a Random agent on the environment.
+
+![](Images/InvertedPendulum_gym_before.gif)
+
 
 For the 'InvertedPendulum-v2' task we see that the algorithm converging to good solution in about iterations. Here
 Exploration is achieved by adding noise to the actor input.
@@ -56,9 +63,33 @@ Exploration is achieved by adding noise to the actor input.
 - Model Architecture can be found in the file [model.py](baselines/baselines/ddpg/model.py)
 - Experimented by adding dropout and LeakyReLU in the architecture
 
+Rendering after the policy is learnt. At the end of training we were able to achieve a reward of 1000
+
+![](Images/InvertedPendulum_gym_after.gif)
+
+
 **Observation** : As show in the figure, addition of dropout and LeakyReLU(instead of Relu), significantly improved the quality of learning(in terms of learning rate and stability)
 
 ![](Images/comparison.png)
+
+ Experiment-2: Pendulum environment (Pendulum-v0)
+ ------------
+
+In this version of the problem, the pendulum starts in a random position, and the goal is to swing it up so it stays upright.
+Random agemt on the environment.
+
+![](Images/pendulum_gym_before.gif)
+
+
+Actor is a 3-layer network. And the average reward we reached here is around -200. Changing the network and learning the policy might improve the reward.
+
+![](Images/pendulum.png)
+
+
+Here is the rendering after learning the policy.
+
+![](Images/pendulum_gym_after.gif)
+
 
 
 References
