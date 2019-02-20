@@ -24,8 +24,6 @@ python run_dqn_atari.py
 
 ## Introduction:
 
-## Intro:
-
 Q-learning is a model-free algorithm. It doesn't assume anything about state-transition probabilities. Neither does it tries to learn these transitions. It estimates the good and bad actions based on trial and error by sampling actions and recieving rewards.The optimal state-action value function obey an important identity known as Bellman equation, which corresponds to an implicit optimal policy.
 
 ![](http://latex.codecogs.com/svg.latex?Q^{*}(s%2Ca)%3DR(s%2Ca)%2B\gamma\max_{a%27}Q^{*}(s%27%2Ca%27))
