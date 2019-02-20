@@ -43,6 +43,8 @@ The online Q-learning mentioned above has some challenges, which makes it diffic
 3. Exploration vs exploitation problem: How to select actions during training? Should the agent trust the learnt values to select actions? or try some other options hoping they may give better rewards.
 	- Use espilon-greedy approach. The agent will pick a random action with probability epsilon and the action according to the current estimates with probability 1-epsilon. Start with an exploration schedule that assigns large value to epsilon initially and reduces the value over iterations. 
 
+The above changes to the DQN can make it more stable and likely to converge.
+
 ![](Images/classicDQN.png)
 
 
@@ -85,40 +87,33 @@ Figure 3
 
 ## Experiment 2: Improving Performance using Double Q Learning
  
-The popular Deep Q-learning algorithm is known to overestimate
-action values under certain conditions.This makes it more likely to select overestimated
-values, resulting in overoptimistic value estimates. 
+The popular Deep Q-learning algorithm is known to overestimate action values under certain conditions.This makes it more likely to select overestimated values, resulting in overoptimistic value estimates. A series of experiments conducted by DeepmMind on Atari games showed that these overestimations are harming the resulting policies (empirically). The empirical results also showed that Double DQN not just learns more accurate value estimates, but also better policies. Overoptimism does not always adversely affect the quality of the learned policy. For example, DQN achieves optimal behavior in Pong despite slightly overestimating the policy value. Nevertheless, reducing  overestimations  can  significantly benefit the stability of learning.
 
-To prevent
-this, double DQN can decouple the selection from the evaluation.In double DQN use the current network(not the target network) to select actions in the Q Learning Bellman Equation, and use the target network to select the action values.  
+To prevent overestimation, double DQN can decouple the selection from the evaluation.In double DQN use the current network(not the target network) to select actions in the Q Learning Bellman Equation, and use the target network to select the action values.  
 
 ![](Images/eqDDQN.PNG)
 
 Equation [1](https://docs.google.com/document/d/1Iw_TUijQ-C6F0M3mWWco8_rDiuEblKvtr8mCB3ITLas/edit#bookmark=id.o1wk0u1ffpzv)
 
-As shown in figure below, for the same learning rate, the Double DQN seems to be picking up with the DQN Learning in the final stages of learning and can possible outperform with more training steps(currently not performed) as shown in the [paper](file:///C:/Users/DELL/Downloads/12389-55999-1-PB.pdf). 
-
+As shown in figure below, for the same learning rate, the Double DQN seems to be picking up with the DQN Learning in the final stages of learning and can possible outperform with more training steps(currently not performed) as shown in the [paper](https://arxiv.org/pdf/1509.06461.pdf). 
 
 ![](Images/DoubleQ.png)
 
 
 ![](https://github.com/vaisakh-shaj/DeepReinforcementLearning/blob/master/3_Deep_Double_Q_Learning_Atari_Games/Images/ddqn-paper.PNG)
-Figure 4: Graph from our experiments(above) and [paper](file:///C:/Users/DELL/Downloads/12389-55999-1-PB.pdf)(below).
+Figure 4: Graph from our experiments(above) and [paper](https://arxiv.org/pdf/1509.06461.pdf)(below).
 
 ## REFERENCES
 
 1. Volodymyr Mnih et all [Playing Atari with Deep Reinforcement Learning](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) 
 
-2. Volodymyr Mnih et all [“Human-level control through deep reinforcement
-learning”](
-https://storage.googleapis.com/deepmind-data/assets/papers/DeepMindNature14236Paper.pdf)
+2. Volodymyr Mnih et all [Human-level control through deep reinforcementlearning](https://storage.googleapis.com/deepmind-data/assets/papers/DeepMindNature14236Paper.pdf)
 
 3. Adrien Lucas Ecoffet's [Blog](https://becominghuman.ai/lets-build-an-atari-ai-part-1-dqn-df57e8ff3b26)
 
 4. Andrej Karpathy's [Blog](http://karpathy.github.io/2016/05/31/rl/)
 
-5. Van Hasselt, Guez, Silver. [Deep reinforcement learning with double Q-learning: a
-very effective trick to improve performance of deep Q-learning.](file:///C:/Users/DELL/Downloads/12389-55999-1-PB.pdf)
+5. Van Hasselt, Guez, Silver. [Deep reinforcement learning with double Q-learning: avery effective trick to improve performance of deep Q-learning.](https://arxiv.org/pdf/1509.06461.pdf)
 
 6. CS 294: Deep Reinforcement Learning, Fall 2017
 
